@@ -167,6 +167,7 @@ a:hover {
 	font-weight: 200;
 	text-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.8);
 	visibility: hidden;
+	text-align: center;
 }
 
 .jumbotron .btn {
