@@ -105,17 +105,10 @@
 				.text(base.$texts.find(':first-child').text())
 				.prependTo($element);
 
-			if (isInEffect(options.in.effect)) {
-				base.$current.css('visibility', 'hidden');
-			} else if (isOutEffect(options.in.effect)) {
-				base.$current.css('visibility', 'visible');
-			}
-
 			base.setOptions(options);
 
 			setTimeout(function () {
-				//	base.$current.css('visibility', 'visible');
-					base.start();
+					base.options.autoStart && base.start();
 			}, base.options.initialDelay)
 		};
 
@@ -125,6 +118,12 @@
 
 		base.start = function (index) {
 			var $next = base.$texts.find(':nth-child(' + (index || 1) + ')');
+
+			if (isInEffect(base.options.in.effect)) {
+				base.$current.css('visibility', 'hidden');
+			} else if (isOutEffect(base.options.in.effect)) {
+				base.$current.css('visibility', 'visible');
+			}
 
 			(function run ($elem) {
 				var options = $.extend({}, base.options, getData($elem));
@@ -177,7 +176,7 @@
 	}
 
 
-	$.fn.textillate = function (settings) {
+	$.fn.textillate = function (settings, args) {
 		return this.each(function () {
 			var $this = $(this)
 				, data = $this.data('textillate')
@@ -185,8 +184,8 @@
 
 			if (!data) { 
 				$this.data('textillate', (data = new Textillate(this, options)));
-			} else if (typeof option == 'string') {
-				data[option].apply(data, [].concat(args));
+			} else if (typeof settings == 'string') {
+				data[settings].apply(data, [].concat(args));
 			} else {
 			  data.setOptions.call(data, options);
 			}
@@ -212,6 +211,7 @@
 			sync: false,
 			shuffle: false,
 		},
+		autoStart: true,
 		inEffects: [],
 		outEffects: [ 'hinge' ]
 	};
