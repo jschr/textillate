@@ -56,17 +56,17 @@
                 <div class="col-1-1 viewport">
                     <div class="tlt">Grumpy wizards make toxic brew for the evil Queen and Jack.</div>
                 </div>
-                <div class="col-1-1 controls">
+                <div class="col-1-1 controls" style="padding-right: 0">
                   <form class="grid grid-pad">
                     <div class="control col-1-2">
                       <label>In Animation</label>
-                      <select class="col-1-2" data-key="effect" data-type="in"></select>
+                      <select data-key="effect" data-type="in" style="width: 50%"></select>
                       <label class="inline checkbox"><input type="checkbox" data-key="sync" data-type="in" /> Sync</label> 
                       <label class="inline checkbox"><input type="checkbox" data-key="shuffle" data-type="in" /> Shuffle</label>
                     </div>
                     <div class="control col-1-2">
                       <label>Out Animation</label>
-                      <select class="col-1-2" data-key="effect" data-type="out"></select>
+                      <select data-key="effect" data-type="out" style="width: 50%"></select>
                       <label class="inline checkbox"><input type="checkbox" data-key="sync" data-type="out" /> Sync</label>
                       <label class="inline checkbox"><input type="checkbox" data-key="shuffle" data-type="out" checked="checked" /> Shuffle</label>
                     </div>
@@ -94,6 +94,7 @@
 </html>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="assests/jquery.fitText.js"></script>
 <script src="assests/jquery.lettering.js"></script>
 <script src="jquery.textillate.js"></script>
 <script>
@@ -136,8 +137,13 @@
     $form.find('[data-key="effect"][data-type="in"]').val('fadeInLeftBig');
     $form.find('[data-key="effect"][data-type="out"]').val('hinge');
 
-    $('.jumbotron h1').textillate({ in: { effect: 'flipInY' }});
-    $('.jumbotron p').textillate({ initialDelay: 1000, in: { delay: 2, delayScale: 1, shuffle: true } });
+    $('.jumbotron h1')
+      .fitText(0.5)
+      .textillate({ in: { effect: 'flipInY' }});
+    
+    $('.jumbotron p')
+      .fitText(5, { minFontSize: 14 })
+      .textillate({ initialDelay: 1000, in: { delay: 2, delayScale: 1, shuffle: true } });
 
     setTimeout(function () {
         $('.fade').addClass('in');

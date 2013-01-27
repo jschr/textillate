@@ -299,8 +299,15 @@ a:hover {
 .grid-pad {
   padding: 20px 0 20px 20px;
 }
+
 .grid-pad [class*='col-']:last-of-type {
   padding-right: 20px;
+}
+
+@media (max-width: 767px) {
+	[class*='col-'] {
+		width: 100%;
+	}
 }
 
 /* FORM
