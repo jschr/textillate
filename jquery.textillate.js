@@ -119,12 +119,6 @@
 		base.start = function (index) {
 			var $next = base.$texts.find(':nth-child(' + (index || 1) + ')');
 
-			if (isInEffect(base.options.in.effect)) {
-				base.$current.css('visibility', 'hidden');
-			} else if (isOutEffect(base.options.in.effect)) {
-				base.$current.css('visibility', 'visible');
-			}
-
 			(function run ($elem) {
 				var options = $.extend({}, base.options, getData($elem));
 
@@ -133,7 +127,14 @@
 					.lettering('words');
 
 				base.$current.find('[class^="word"]')
-						.css('display', 'inline-block')
+						.css({ 
+							'display': 'inline-block',
+							// fix for poor ios performance
+							'-webkit-transform': 'translate3d(0,0,0)',
+							   '-moz-transform': 'translate3d(0,0,0)',
+							     '-o-transform': 'translate3d(0,0,0)',
+							        'transform': 'translate3d(0,0,0)'
+						})
 						.each(function () { $(this).lettering() });
 
 				var $chars = base.$current.find('[class^="char"]')

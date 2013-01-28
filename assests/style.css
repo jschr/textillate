@@ -9,7 +9,6 @@ body {
 	background: #282828;
 	color: #eee;
 	font-family: 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
-	-webkit-font-smoothing: subpixel-antialiased;
 	font-size: 14px;
 }
 
@@ -225,7 +224,7 @@ a:hover {
   vertical-align: middle;
   display: table-cell;
   text-align: center;
-  visibility: hidden;
+  /*visibility: hidden;*/
 }
 
 .deps {
@@ -369,4 +368,5 @@ label.checkbox {
 	padding: 4px 0;
 	margin-left: 12px;
 	white-space: nowrap;
+	vertical-align: top;
 }
