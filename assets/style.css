@@ -209,11 +209,13 @@ a:hover {
 
 .playground .controls select {
   width: 50%;
+  margin-right: 10px;
 }
 
 @media (max-width: 480px) {
   .playground .controls select {
     width: 100%;
+    margin-right: 0;
   }
 }
 
@@ -383,7 +385,7 @@ label.inline {
 
 label.checkbox {
   padding: 4px 0;
-  margin-left: 12px;
+  margin-right: 10px;
   white-space: nowrap;
   vertical-align: top;
 }
