@@ -49,6 +49,13 @@ $('.tlt').textillate();
 
 Notice that you can control the animation parameters on each text (`<li>`) using the data api.
 
+##Dependencies
+To start using textillate.js, you will need the following:
+
+* [jQuery](http://jquery.com/download/)
+* [lettering.js](https://github.com/davatron5000/Lettering.js)
+* [animate.css](https://github.com/daneden/animate.css)
+* 
 ##Options
 
 ```js
@@ -104,10 +111,3 @@ $('.tlt').textillate({
   }
 });
 ```
-
-##Dependencies
-To start using textillate.js, you will need the following:
-
-* [jQuery](http://jquery.com/download/)
-* [lettering.js](https://github.com/davatron5000/Lettering.js)
-* [animate.css](https://github.com/daneden/animate.css)
