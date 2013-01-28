@@ -174,14 +174,8 @@
       }($next));
     };
 
-    base.destroy = function () {
-
-    };
-
     base.init();
-
   }
-
 
   $.fn.textillate = function (settings, args) {
     return this.each(function () {
