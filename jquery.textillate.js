@@ -7,214 +7,220 @@
  */
 
 (function ($) {
-	"use strict"; 
+  "use strict"; 
 
-	function isInEffect (effect) {
-		return /In/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.inEffects) >= 0;
-	};
+  function isInEffect (effect) {
+    return /In/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.inEffects) >= 0;
+  };
 
-	function isOutEffect (effect) {
-		return /Out/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.outEffects) >= 0;
-	};
+  function isOutEffect (effect) {
+    return /Out/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.outEffects) >= 0;
+  };
 
-	// custom get data api method
-	function getData (node) {
-		var attrs = node.attributes || []
-			, data = {};
+  // custom get data api method
+  function getData (node) {
+    var attrs = node.attributes || []
+      , data = {};
 
-		if (!attrs.length) return data;
+    if (!attrs.length) return data;
 
-		$.each(attrs, function (i, attr) {
-			if (/^data-in-*/.test(attr.nodeName)) {
-				data.in = data.in || {};
-				data.in[attr.nodeName.replace(/data-in-/, '')] = attr.nodeValue;
-			} else if (/^data-out-*/.test(attr.nodeName)) {
-				data.out = data.out || {};
-				data.out[attr.nodeName.replace(/data-out-/, '')] = attr.nodeValue;
-			} else if (/^data-*/.test(attr.nodeName)) {
-				data[attr.nodeName] = attr.nodeValue;
-			}
-		})
+    $.each(attrs, function (i, attr) {
+      if (/^data-in-*/.test(attr.nodeName)) {
+        data.in = data.in || {};
+        data.in[attr.nodeName.replace(/data-in-/, '')] = attr.nodeValue;
+      } else if (/^data-out-*/.test(attr.nodeName)) {
+        data.out = data.out || {};
+        data.out[attr.nodeName.replace(/data-out-/, '')] = attr.nodeValue;
+      } else if (/^data-*/.test(attr.nodeName)) {
+        data[attr.nodeName] = attr.nodeValue;
+      }
+    })
 
-		return data;
-	}
+    return data;
+  }
 
-	function shuffle (o) {
-	    for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-	    return o;
-	}
+  function shuffle (o) {
+      for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+      return o;
+  }
 
-	function animate ($c, effect, cb) {
-		$c.addClass('animated ' + effect)
-			.css('visibility', 'visible')
-			.show();
+  function animate ($c, effect, cb) {
+    $c.addClass('animated ' + effect)
+      .css('visibility', 'visible')
+      .show();
 
     $c.one('animationend webkitAnimationEnd oAnimationEnd', function () {
         $c.removeClass('animated ' + effect);
         cb && cb();
     });
-	}
+  }
 
-	function animateChars ($chars, options, cb) {
-		var that = this
-			, count = $chars.length;
+  function animateChars ($chars, options, cb) {
+    var that = this
+      , count = $chars.length;
 
-		if (!count) {
-			cb && cb();
-			return;
-		} 
+    if (!count) {
+      cb && cb();
+      return;
+    } 
 
-		if (options.shuffle) shuffle($chars);
+    if (options.shuffle) shuffle($chars);
 
-		$chars.each(function (i) {
-			var $this = $(this);
-			
-			function complete () {
-				if (isInEffect(options.effect)) {
-					$this.css('visibility', 'visible');
-				} else if (isOutEffect(options.effect)) {
-					$this.css('visibility', 'hidden');
-				}
-				count -= 1;
-				if (!count && cb) cb();
-			}
+    $chars.each(function (i) {
+      var $this = $(this);
+      
+      function complete () {
+        if (isInEffect(options.effect)) {
+          $this.css('visibility', 'visible');
+        } else if (isOutEffect(options.effect)) {
+          $this.css('visibility', 'hidden');
+        }
+        count -= 1;
+        if (!count && cb) cb();
+      }
 
-			var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
+      var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
 
-			$this.text() ? 
-				setTimeout(function () { animate($this, options.effect, complete) }, delay) :
-				complete();
-		})
-	};
+      $this.text() ? 
+        setTimeout(function () { animate($this, options.effect, complete) }, delay) :
+        complete();
+    })
+  };
 
-	var Textillate = function (element, options) {
-		var base = this
-			, $element = $(element);
+  var Textillate = function (element, options) {
+    var base = this
+      , $element = $(element);
 
-		base.init = function () {
-			base.$texts = $element.find(options.selector);
-			
-			if (!base.$texts.length) {
-				base.$texts = $('<ul class="texts"><li>' + $element.text() + '</li></ul>');
-				$element.html(base.$texts);
-			}
+    base.init = function () {
+      base.$texts = $element.find(options.selector);
+      
+      if (!base.$texts.length) {
+        base.$texts = $('<ul class="texts"><li>' + $element.text() + '</li></ul>');
+        $element.html(base.$texts);
+      }
 
-			base.$texts.hide();
+      base.$texts.hide();
 
-			base.$current = $('<span>')
-				.text(base.$texts.find(':first-child').text())
-				.prependTo($element);
+      base.$current = $('<span>')
+        .text(base.$texts.find(':first-child').text())
+        .prependTo($element);
 
-			base.setOptions(options);
+      if (isInEffect(options.effect)) {
+        base.$current.css('visibility', 'hidden');
+      } else if (isOutEffect(options.effect)) {
+        base.$current.css('visibility', 'visible');
+      }
 
-			setTimeout(function () {
-					base.options.autoStart && base.start();
-			}, base.options.initialDelay)
-		};
+      base.setOptions(options);
 
-		base.setOptions = function (options) {
-			base.options = options;
-		};
+      setTimeout(function () {
+        base.options.autoStart && base.start();
+      }, base.options.initialDelay)
+    };
 
-		base.start = function (index) {
-			var $next = base.$texts.find(':nth-child(' + (index || 1) + ')');
+    base.setOptions = function (options) {
+      base.options = options;
+    };
 
-			(function run ($elem) {
-				var options = $.extend({}, base.options, getData($elem));
+    base.start = function (index) {
+      var $next = base.$texts.find(':nth-child(' + (index || 1) + ')');
 
-				base.$current
-					.text($elem.text())
-					.lettering('words');
+      (function run ($elem) {
+        var options = $.extend({}, base.options, getData($elem));
 
-				base.$current.find('[class^="word"]')
-						.css({ 
-							'display': 'inline-block',
-							// fix for poor ios performance
-							'-webkit-transform': 'translate3d(0,0,0)',
-							   '-moz-transform': 'translate3d(0,0,0)',
-							     '-o-transform': 'translate3d(0,0,0)',
-							        'transform': 'translate3d(0,0,0)'
-						})
-						.each(function () { $(this).lettering() });
+        base.$current
+          .text($elem.text())
+          .lettering('words');
 
-				var $chars = base.$current.find('[class^="char"]')
-					.css('display', 'inline-block');
+        base.$current.find('[class^="word"]')
+            .css({ 
+              'display': 'inline-block',
+              // fix for poor ios performance
+              '-webkit-transform': 'translate3d(0,0,0)',
+                 '-moz-transform': 'translate3d(0,0,0)',
+                   '-o-transform': 'translate3d(0,0,0)',
+                      'transform': 'translate3d(0,0,0)'
+            })
+            .each(function () { $(this).lettering() });
 
-				if (isInEffect(options.in.effect)) {
-					$chars.css('visibility', 'hidden');
-				} else if (isOutEffect(options.in.effect)) {
-					$chars.css('visibility', 'visible');
-				}
+        var $chars = base.$current.find('[class^="char"]')
+          .css('display', 'inline-block');
 
-				animateChars($chars, options.in, function () {
-					setTimeout(function () {
-						// in case options have changed 
-						var options = $.extend({}, base.options, getData($elem));
+        if (isInEffect(options.in.effect)) {
+          $chars.css('visibility', 'hidden');
+        } else if (isOutEffect(options.in.effect)) {
+          $chars.css('visibility', 'visible');
+        }
 
-						var $next = $elem.next();
+        animateChars($chars, options.in, function () {
+          setTimeout(function () {
+            // in case options have changed 
+            var options = $.extend({}, base.options, getData($elem));
 
-						if (base.options.loop && !$next.length) {
-							$next = base.$texts.find(':first-child');
-						} 
+            var $next = $elem.next();
 
-						if (!$next.length) return;
+            if (base.options.loop && !$next.length) {
+              $next = base.$texts.find(':first-child');
+            } 
 
-						animateChars($chars, options.out, function () {
-							run($next)
-						});
-					}, base.options.minDisplayTime);
-				});
+            if (!$next.length) return;
 
-			}($next));
-		};
+            animateChars($chars, options.out, function () {
+              run($next)
+            });
+          }, base.options.minDisplayTime);
+        });
 
-		base.destroy = function () {
+      }($next));
+    };
 
-		};
+    base.destroy = function () {
 
-		base.init();
+    };
 
-	}
+    base.init();
+
+  }
 
 
-	$.fn.textillate = function (settings, args) {
-		return this.each(function () {
-			var $this = $(this)
-				, data = $this.data('textillate')
-				, options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
+  $.fn.textillate = function (settings, args) {
+    return this.each(function () {
+      var $this = $(this)
+        , data = $this.data('textillate')
+        , options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
 
-			if (!data) { 
-				$this.data('textillate', (data = new Textillate(this, options)));
-			} else if (typeof settings == 'string') {
-				data[settings].apply(data, [].concat(args));
-			} else {
-			  data.setOptions.call(data, options);
-			}
-		})
-	};
-	
-	$.fn.textillate.defaults = {
-		selector: '.texts',
-		loop: false,
-		minDisplayTime: 2000,
-		initialDelay: 0,
-		in: {
-			effect: 'fadeInLeftBig',
-			delayScale: 1.5,
-			delay: 50,
-			sync: false,
-			shuffle: false
-		},
-		out: {
-			effect: 'hinge',
-			delayScale: 1.5,
-			delay: 50,
-			sync: false,
-			shuffle: false,
-		},
-		autoStart: true,
-		inEffects: [],
-		outEffects: [ 'hinge' ]
-	};
+      if (!data) { 
+        $this.data('textillate', (data = new Textillate(this, options)));
+      } else if (typeof settings == 'string') {
+        data[settings].apply(data, [].concat(args));
+      } else {
+        data.setOptions.call(data, options);
+      }
+    })
+  };
+  
+  $.fn.textillate.defaults = {
+    selector: '.texts',
+    loop: false,
+    minDisplayTime: 2000,
+    initialDelay: 0,
+    in: {
+      effect: 'fadeInLeftBig',
+      delayScale: 1.5,
+      delay: 50,
+      sync: false,
+      shuffle: false
+    },
+    out: {
+      effect: 'hinge',
+      delayScale: 1.5,
+      delay: 50,
+      sync: false,
+      shuffle: false,
+    },
+    autoStart: true,
+    inEffects: [],
+    outEffects: [ 'hinge' ]
+  };
 
 }(jQuery));

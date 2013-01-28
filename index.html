@@ -4,8 +4,9 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Textillate.js</title>
-  <link href="assests/animate.css" rel="stylesheet">
-  <link href="assests/style.css" rel="stylesheet">
+  <link href="assets/animate.css" rel="stylesheet">
+  <link href="assets/dark.css" rel="stylesheet">
+  <link href="assets/style.css" rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
 </html>
   <head>
@@ -41,32 +42,36 @@
           </section>
         </div>
       </div>
-      <div class="grid grid-pad">
+      <!--<div class="grid grid-pad">
         <section class="col-1-1">
-            <h2>Examples</h2>
-            <div class="grid grid-pad">
-
-            </div>
+          <h2>Examples</h2>
+          <pre><code class="xml"><span id="example">Some Text</span></code></pre>
+          <pre><code class="javascript">$('#example').textillate()</code></pre>
         </section>
-      </div>
+      </div>-->
       <div class="grid grid-pad">
         <section class="col-1-1">
             <h2>Playground</h2>
             <div class="playground grid">
               <div class="col-1-1 viewport">
-                  <div class="tlt">Grumpy wizards make toxic brew for the evil Queen and Jack.</div>
+                  <div class="tlt">
+                    <ul class="texts" style="display: none">
+                      <li>Grumpy wizards make toxic brew for the evil Queen and Jack.</li>
+                      <li>The quick brown fox jumps over the lazy dog.</li>
+                    </ul>
+                  </div>
               </div>
               <div class="col-1-1 controls" style="padding-right: 0">
                 <form class="grid grid-pad">
                   <div class="control col-1-2">
                     <label>In Animation</label>
-                    <select data-key="effect" data-type="in" style="width: 50%"></select>
+                    <select data-key="effect" data-type="in"></select>
                     <label class="inline checkbox"><input type="checkbox" data-key="sync" data-type="in" /> Sync</label> 
                     <label class="inline checkbox"><input type="checkbox" data-key="shuffle" data-type="in" /> Shuffle</label>
                   </div>
                   <div class="control col-1-2">
                     <label>Out Animation</label>
-                    <select data-key="effect" data-type="out" style="width: 50%"></select>
+                    <select data-key="effect" data-type="out"></select>
                     <label class="inline checkbox"><input type="checkbox" data-key="sync" data-type="out" /> Sync</label>
                     <label class="inline checkbox"><input type="checkbox" data-key="shuffle" data-type="out" checked="checked" /> Shuffle</label>
                   </div>
@@ -93,13 +98,20 @@
 </html>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script src="assests/jquery.fittext.js"></script>
-<script src="assests/jquery.lettering.js"></script>
+<script src="assets/jquery.fittext.js"></script>
+<script src="assets/jquery.lettering.js"></script>
+<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
 <script src="jquery.textillate.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <script>
 
   $(function (){
-    //return;
+
+    $('code').each(function () {
+      var $this = $(this);
+      $this.text($this.html());
+    })
+
     var animateClasses = 'flash bounce shake tada swing wobble pulse flip flipInX flipOutX flipInY flipOutY fadeIn fadeInUp fadeInDown fadeInLeft fadeInRight fadeInUpBig fadeInDownBig fadeInLeftBig fadeInRightBig fadeOut fadeOutUp fadeOutDown fadeOutLeft fadeOutRight fadeOutUpBig fadeOutDownBig fadeOutLeftBig fadeOutRightBig bounceIn bounceInDown bounceInUp bounceInLeft bounceInRight bounceOut bounceOutDown bounceOutUp bounceOutLeft bounceOutRight rotateIn rotateInDownLeft rotateInDownRight rotateInUpLeft rotateInUpRight rotateOut rotateOutDownLeft rotateOutDownRight rotateOutUpLeft rotateOutUpRight hinge rollIn rollOut';
 
     var $form = $('.playground form')
@@ -156,11 +168,8 @@
     $form.on('change', function () {
       var obj = getFormData();
       $viewport.find('.tlt').textillate(obj);
-    });
+    }).trigger('change');
 
-    setTimeout(function () {
-      $form.trigger('change');
-    }, 1000)
   });
 
 </script>
