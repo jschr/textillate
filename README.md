@@ -98,7 +98,7 @@ $('.tlt').textillate({
     sync: false,
     
     // randomize the character sequence 
-    // (not that shuffle doesn't make sence in sync = true)
+    // (note that shuffle doesn't make sence in sync = true)
     shuffle: false
   },
   
