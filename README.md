@@ -2,7 +2,7 @@
 
 See live demo [here](http://jschr.github.com/textillate/).
 
-Textillate.js combines some awesome libraries to provide a ease-to-use plugin for applying CSS3 animations to any text.
+Textillate.js combines some awesome libraries to provide an ease-to-use plugin for applying CSS3 animations to any text.
 
 ##Usage
 
