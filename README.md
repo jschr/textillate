@@ -98,11 +98,11 @@ $('.tlt').textillate({
     sync: false,
     
     // randomize the character sequence 
-    // (note that shuffle doesn't make sence in sync = true)
+    // (note that shuffle doesn't make sense with sync = true)
     shuffle: false
   },
   
-  // out animation settings
+  // out animation settings.
   out: {
     effect: 'hinge',
     delayScale: 1.5,
