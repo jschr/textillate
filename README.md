@@ -23,7 +23,7 @@ $(function () {
 This will animate using the default options. To change the defaults, you can either use the html data api:
 
 ```html
-<h1 class="tlt" data-in-effect="rollIn">Tittle</h1>
+<h1 class="tlt" data-in-effect="rollIn">Title</h1>
 ```
 
 or pass in options on initialization (see full list of options below):
