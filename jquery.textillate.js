@@ -184,7 +184,10 @@
         , options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
 
       if (data) {
-        var text = $this.find('.texts').text();
+        var text;
+        if(!(text = $this.find('.texts').text())){
+          text = $this.text();
+        }
         $this.empty();
         $this.text(text);
       }
