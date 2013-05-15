@@ -18,25 +18,49 @@
   };
 
   // custom get data api method
-  function getData (node) {
-    var attrs = node.attributes || []
-      , data = {};
+ function getData (node) {
 
-    if (!attrs.length) return data;
-
-    $.each(attrs, function (i, attr) {
-      if (/^data-in-*/.test(attr.nodeName)) {
-        data.in = data.in || {};
-        data.in[attr.nodeName.replace(/data-in-/, '')] = attr.nodeValue;
-      } else if (/^data-out-*/.test(attr.nodeName)) {
-        data.out = data.out || {};
-        data.out[attr.nodeName.replace(/data-out-/, '')] = attr.nodeValue;
-      } else if (/^data-*/.test(attr.nodeName)) {
-        data[attr.nodeName] = attr.nodeValue;
-      }
-    })
-
+  var data={};
+  var attrs;
+  
+  //fixed for nodes
+  if(node[0])
+    attrs = node[0].attributes;
+  else{
+	  attrs = node.attributes
+  }
+  
+	$.each(attrs, function (i, attr) {      
+	      if (/^data-in-*/.test(attr.nodeName)) {
+	        data.in = data.in || {};
+	        data.in[attr.nodeName.replace(/data-in-/, '')] = args(attr.nodeValue);
+	      } else if (/^data-out-*/.test(attr.nodeName)) {
+	        data.out = data.out || {};
+			data.out[attr.nodeName.replace(/data-out-/, '')] = args(attr.nodeValue);
+	      } else if (/^data-*/.test(attr.nodeName)) {
+	        data[attr.nodeName] = args(attr.nodeValue);
+	      }
+	    });
+      
     return data;
+  }
+  
+  //argument parse
+  function args(arg){
+	var ret;
+		if(arg == 'true'){
+				ret = true;
+			}
+			else if(arg == 'false'){
+				ret = false;
+			}
+			else if(!isNaN(arg)){
+				ret = parseInt(arg);
+			}
+			else{
+				ret = arg;
+			}
+		return ret;
   }
 
   function shuffle (o) {
@@ -78,8 +102,8 @@
         count -= 1;
         if (!count && cb) cb();
       }
-
-      var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
+      
+      var delay = options.sync ? options.delay : options.delay * i * options.delayscale;
 
       $this.text() ? 
         setTimeout(function () { animate($this, options.effect, complete) }, delay) :
