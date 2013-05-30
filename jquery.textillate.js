@@ -95,14 +95,14 @@
       base.$texts = $element.find(options.selector);
       
       if (!base.$texts.length) {
-        base.$texts = $('<ul class="texts"><li>' + $element.text() + '</li></ul>');
+        base.$texts = $('<ul class="texts"><li>' + $element.html() + '</li></ul>');
         $element.html(base.$texts);
       }
 
       base.$texts.hide();
 
       base.$current = $('<span>')
-        .text(base.$texts.find(':first-child').text())
+        .text(base.$texts.find(':first-child').html())
         .prependTo($element);
 
       if (isInEffect(options.effect)) {
@@ -129,7 +129,7 @@
         var options = $.extend({}, base.options, getData($elem));
 
         base.$current
-          .text($elem.text())
+          .text($elem.html())
           .lettering('words');
 
         base.$current.find('[class^="word"]')
