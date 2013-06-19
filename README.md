@@ -72,7 +72,7 @@ $('.tlt').textillate({
   
   // sets the initial delay before starting the animation
   // (note that depending on the in effect you may need to manually apply 
-  // visibility: hidden to the element before runnin the animation)
+  // visibility: hidden to the element before running this plugin)
   initialDelay: 0,
     
   // set whether or not to automatically start animating
