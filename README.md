@@ -71,6 +71,8 @@ $('.tlt').textillate({
   minDisplayTime: 2000,
   
   // sets the initial delay before starting the animation
+  // (note that depending on the in effect you may need to manually apply 
+  // visibility: hidden to the element before runnin the animation)
   initialDelay: 0,
     
   // set whether or not to automatically start animating
