@@ -145,7 +145,7 @@
 
       (function run ($elem) {
         var options = $.extend({}, base.options, getData($elem));
-        
+
         base.$current
           .text($elem.html())
           .lettering('words');
@@ -181,7 +181,6 @@
               $next = base.$texts.find(':first-child');
             } 
 
-
             if (!$next.length) return;
 
             animateChars($chars, options.out, function () {
@@ -197,9 +196,6 @@
   }
 
   $.fn.textillate = function (settings, args) {
-    /*if(callback !== undefined)
-      $.fn.textillate.defaults.callback = callback;
-    if()*/
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('textillate')
@@ -228,7 +224,7 @@
       delay: 50,
       sync: false,
       shuffle: false,
-      callback: null,
+      callback: null
     },
     out: {
       effect: 'hinge',
@@ -236,7 +232,7 @@
       delay: 50,
       sync: false,
       shuffle: false,
-      callback:null,
+      callback:null
     },
     autoStart: true,
     inEffects: [],
