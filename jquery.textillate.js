@@ -1,5 +1,5 @@
-/*!
- * texillate.js
+/*
+ * textillate.js
  * http://jschr.github.com/textillate
  * MIT licensed
  *
@@ -55,7 +55,7 @@
     });
   }
 
-  function animateChars ($chars, options, cb) {
+  function animateChars ($chars, options, cb, fOptions) {
     var that = this
       , count = $chars.length;
 
@@ -76,7 +76,25 @@
           $this.css('visibility', 'hidden');
         }
         count -= 1;
-        if (!count && cb) cb();
+        if (!count && cb) {
+          cb();
+
+          if($.fn.textillate.current == "in"){
+            //The in animation is done
+            if(fOptions.in.callback !== null)
+              fOptions.in.callback();
+
+            $.fn.textillate.current = "out";
+
+          }else{
+            //The out animation is done
+            if(fOptions.out.callback !== null)
+              fOptions.out.callback();
+
+            $.fn.textillate.current = "in";
+          }
+        };
+       
       }
 
       var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
@@ -84,7 +102,7 @@
       $this.text() ? 
         setTimeout(function () { animate($this, options.effect, complete) }, delay) :
         complete();
-    })
+    });
   };
 
   var Textillate = function (element, options) {
@@ -127,7 +145,7 @@
 
       (function run ($elem) {
         var options = $.extend({}, base.options, getData($elem));
-
+        
         base.$current
           .text($elem.html())
           .lettering('words');
@@ -163,13 +181,14 @@
               $next = base.$texts.find(':first-child');
             } 
 
+
             if (!$next.length) return;
 
             animateChars($chars, options.out, function () {
               run($next)
-            });
+            }, options);
           }, base.options.minDisplayTime);
-        });
+        }, options);
 
       }($next));
     };
@@ -178,6 +197,9 @@
   }
 
   $.fn.textillate = function (settings, args) {
+    /*if(callback !== undefined)
+      $.fn.textillate.defaults.callback = callback;
+    if()*/
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('textillate')
@@ -193,6 +215,8 @@
     })
   };
   
+  $.fn.textillate.current = "in";
+
   $.fn.textillate.defaults = {
     selector: '.texts',
     loop: false,
@@ -203,7 +227,8 @@
       delayScale: 1.5,
       delay: 50,
       sync: false,
-      shuffle: false
+      shuffle: false,
+      callback: null,
     },
     out: {
       effect: 'hinge',
@@ -211,6 +236,7 @@
       delay: 50,
       sync: false,
       shuffle: false,
+      callback:null,
     },
     autoStart: true,
     inEffects: [],
