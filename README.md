@@ -1,8 +1,8 @@
 #Textillate.js v0.1
 
-See live demo [here](http://jschr.github.com/textillate/).
+See a live demo [here](http://jschr.github.com/textillate/).
 
-Textillate.js combines some awesome libraries to provide an ease-to-use plugin for applying CSS3 animations to any text.
+Textillate.js combines some awesome libraries to provide an easy-to-use plugin for applying CSS3 animations to any text.
 
 ##Usage
 
@@ -12,7 +12,7 @@ Let's start with the basic markup:
 <h1 class="tlt">My Title</h1>
 ```
 
-And your javascript should look like this:
+And your JavaScript should look like this:
 
 ```js
 $(function () {
@@ -32,7 +32,7 @@ or pass in options on initialization (see full list of options below):
 $('.tlt').textillate({ in: { effect: 'rollIn' } });
 ```
 
-You can also tell textillate.js to animate a list of texts with the following markup:
+You can also tell textillate.js to animate a list with the following markup:
 
 ```html
 <h1 class="tlt">
