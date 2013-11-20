@@ -167,12 +167,12 @@
     }, 2000);
 
     var $tlt = $viewport.find('.tlt')
-      .on('start.textillate', log('start.textillate triggered.'))
-      .on('inAnimationBegin.textillate', log('inAnimationBegin.textillate triggered.'))
-      .on('inAnimationEnd.textillate', log('inAnimationEnd.textillate triggered.'))
-      .on('outAnimationBegin.textillate', log('outAnimationBegin.textillate triggered.'))
-      .on('outAnimationEnd.textillate', log('outAnimationEnd.textillate triggered.'))
-      .on('end.textillate', log('end.textillate'));
+      .on('start.tlt', log('start.tlt triggered.'))
+      .on('inAnimationBegin.tlt', log('inAnimationBegin.tlt triggered.'))
+      .on('inAnimationEnd.tlt', log('inAnimationEnd.tlt triggered.'))
+      .on('outAnimationBegin.tlt', log('outAnimationBegin.tlt triggered.'))
+      .on('outAnimationEnd.tlt', log('outAnimationEnd.tlt triggered.'))
+      .on('end.tlt', log('end.tlt'));
     
     $form.on('change', function () {
       var obj = getFormData();

@@ -123,7 +123,7 @@
     };
 
     base.triggerEvent = function (name) {
-      var e = $.Event(name + '.textillate', { data: base });
+      var e = $.Event(name + '.tlt', { data: base });
       $element.trigger(e);
       return e;
     };

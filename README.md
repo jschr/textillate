@@ -121,3 +121,14 @@ $('.tlt').textillate({
   callback: function () {}
 });
 ```
+
+##Events
+
+Textillate triggers the following events
+
+* start.tlt - triggered when textillate starts
+* inAnimationBegin.tlt - triggered when the in animation begins
+* inAnimationEnd.tlt - triggered when the in animation ends
+* outAnimationBegin.tlt - triggered when the out animation begins
+* outAnimationEnd.tlt - triggered when the in animation ends
+* end.tlt - triggered when textillate ends
