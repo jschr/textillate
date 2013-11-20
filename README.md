@@ -1,8 +1,8 @@
-#Textillate.js v0.1
+#Textillate.js v0.2.0
 
-See live demo [here](http://jschr.github.com/textillate/).
+See a live demo [here](http://jschr.github.com/textillate/).
 
-Textillate.js combines some awesome libraries to provide an ease-to-use plugin for applying CSS3 animations to any text.
+Textillate.js combines some awesome libraries to provide an easy-to-use plugin for applying CSS3 animations to any text.
 
 ##Usage
 
@@ -12,7 +12,7 @@ Let's start with the basic markup:
 <h1 class="tlt">My Title</h1>
 ```
 
-And your javascript should look like this:
+And your JavaScript should look like this:
 
 ```js
 $(function () {
@@ -32,7 +32,7 @@ or pass in options on initialization (see full list of options below):
 $('.tlt').textillate({ in: { effect: 'rollIn' } });
 ```
 
-You can also tell textillate.js to animate a list of texts with the following markup:
+You can also tell textillate.js to animate a list with the following markup:
 
 ```html
 <h1 class="tlt">
@@ -71,6 +71,8 @@ $('.tlt').textillate({
   minDisplayTime: 2000,
   
   // sets the initial delay before starting the animation
+  // (note that depending on the in effect you may need to manually apply 
+  // visibility: hidden to the element before running this plugin)
   initialDelay: 0,
     
   // set whether or not to automatically start animating
@@ -99,7 +101,10 @@ $('.tlt').textillate({
     
     // randomize the character sequence 
     // (note that shuffle doesn't make sense with sync = true)
-    shuffle: false
+    shuffle: false,
+
+    // callback that executes once the animation has finished
+    callback: function () {}
   },
   
   // out animation settings.
@@ -109,6 +114,27 @@ $('.tlt').textillate({
     delay: 50,
     sync: false,
     shuffle: false,
-  }
+    callback: function () {}
+  },
+
+  // callback that executes once textillate has finished 
+  callback: function () {}
+});
+```
+
+##Events
+
+Textillate triggers the following events:
+
+* `start.tlt` - triggered when textillate starts
+* `inAnimationBegin.tlt` - triggered when the in animation begins
+* `inAnimationEnd.tlt` - triggered when the in animation ends
+* `outAnimationBegin.tlt` - triggered when the out animation begins
+* `outAnimationEnd.tlt` - triggered when the in animation ends
+* `end.tlt` - triggered when textillate ends
+
+```js
+$('.tlt').on('inAnimationBegin.tlt', function () {
+  // do something
 });
 ```
