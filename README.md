@@ -124,7 +124,7 @@ $('.tlt').textillate({
 
 ##Events
 
-Textillate triggers the following events
+Textillate triggers the following events:
 
 * `start.tlt` - triggered when textillate starts
 * `inAnimationBegin.tlt` - triggered when the in animation begins
