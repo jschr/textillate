@@ -132,3 +132,9 @@ Textillate triggers the following events
 * outAnimationBegin.tlt - triggered when the out animation begins
 * outAnimationEnd.tlt - triggered when the in animation ends
 * end.tlt - triggered when textillate ends
+
+```js
+$('.tlt').on('inAnimationBegin.tlt', function () {
+  // do something
+});
+```
