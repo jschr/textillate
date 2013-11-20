@@ -98,9 +98,12 @@
 <script src="jquery.textillate.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
 <script>
-
   $(function (){
-
+    var log = function (msg) {
+      return function () {
+        if (console) console.log(msg);
+      }
+    }
     $('code').each(function () {
       var $this = $(this);
       $this.text($this.html());
@@ -112,7 +115,11 @@
       , $viewport = $('.playground .viewport');
 
     var getFormData = function () {
-      var data = { loop: true, in: {}, out: {} };
+      var data = { 
+        loop: true, 
+        in: { callback: log('in callback called.') }, 
+        out: { callback: log('out callback called.') } 
+      };
       
       $form.find('[data-key]').each(function () {
         var $this = $(this)
@@ -159,9 +166,17 @@
       $('h1.glow').removeClass('in');
     }, 2000);
 
+    var $tlt = $viewport.find('.tlt')
+      .on('start.textillate', log('start.textillate triggered.'))
+      .on('inAnimationBegin.textillate', log('inAnimationBegin.textillate triggered.'))
+      .on('inAnimationEnd.textillate', log('inAnimationEnd.textillate triggered.'))
+      .on('outAnimationBegin.textillate', log('outAnimationBegin.textillate triggered.'))
+      .on('outAnimationEnd.textillate', log('outAnimationEnd.textillate triggered.'))
+      .on('end.textillate', log('end.textillate'));
+    
     $form.on('change', function () {
       var obj = getFormData();
-      $viewport.find('.tlt').textillate(obj);
+      $tlt.textillate(obj);
     }).trigger('change');
 
   });

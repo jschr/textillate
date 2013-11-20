@@ -1,4 +1,4 @@
-#Textillate.js v0.1
+#Textillate.js v0.2.0
 
 See a live demo [here](http://jschr.github.com/textillate/).
 
@@ -101,7 +101,10 @@ $('.tlt').textillate({
     
     // randomize the character sequence 
     // (note that shuffle doesn't make sense with sync = true)
-    shuffle: false
+    shuffle: false,
+
+    // callback that executes once the animation has finished
+    callback: function () {}
   },
   
   // out animation settings.
@@ -111,6 +114,10 @@ $('.tlt').textillate({
     delay: 50,
     sync: false,
     shuffle: false,
-  }
+    callback: function () {}
+  },
+
+  // callback that executes once textillate has finished 
+  callback: function () {}
 });
 ```
