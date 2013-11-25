@@ -138,3 +138,7 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
   // do something
 });
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jschr/textillate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
