@@ -44,10 +44,19 @@
       return o;
   }
 
-  function animate ($c, effect, cb) {
+  function animate ($c, effect, cb, duration) {
     $c.addClass('animated ' + effect)
       .css('visibility', 'visible')
       .show();
+
+    //set appropriate duration
+    if (duration) {
+      $c.css('-webkit-animation-duration', parseInt(duration) + 'ms')
+        .css('-moz-animation-duration', parseInt(duration) + 'ms')
+        .css('-ms-animation-duration', parseInt(duration) + 'ms')
+        .css('-o-animation-duration', parseInt(duration) + 'ms')
+        .css('animation-duration', parseInt(duration) + 'ms');
+    }
 
     $c.one('animationend webkitAnimationEnd oAnimationEnd', function () {
         $c.removeClass('animated ' + effect);
@@ -79,10 +88,13 @@
         if (!count && cb) cb();
       }
 
-      var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
+      //Animate to a fixed duration - essentially ignores delay to achieve this
+      if (!options.sync && options.duration) var duration = options.delay = options.duration / $chars.length;
+
+      var delay = options.sync ? options.delay : options.delay * i * options.delayScale;     
 
       $this.text() ? 
-        setTimeout(function () { animate($this, options.effect, complete) }, delay) :
+        setTimeout(function () { animate($this, options.effect, complete, duration) }, delay) :
         complete();
     })
   };
@@ -95,14 +107,14 @@
       base.$texts = $element.find(options.selector);
       
       if (!base.$texts.length) {
-        base.$texts = $('<ul class="texts"><li>' + $element.html() + '</li></ul>');
+        base.$texts = $('<ul class="texts"><li>' + $element.text() + '</li></ul>');
         $element.html(base.$texts);
       }
 
       base.$texts.hide();
 
       base.$current = $('<span>')
-        .text(base.$texts.find(':first-child').html())
+        .text(base.$texts.find(':first-child').text())
         .prependTo($element);
 
       if (isInEffect(options.effect)) {
