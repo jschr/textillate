@@ -64,16 +64,17 @@
       return;
     } 
 
-    if (options.shuffle) shuffle($chars);
+    if (options.shuffle) $chars = shuffle($chars);
+    if (options.reverse) $chars = $chars.toArray().reverse();
 
-    $chars.each(function (i) {
-      var $this = $(this);
+    $.each($chars, function (i, c) {
+      var $char = $(c);
       
       function complete () {
         if (isInEffect(options.effect)) {
-          $this.css('visibility', 'visible');
+          $char.css('visibility', 'visible');
         } else if (isOutEffect(options.effect)) {
-          $this.css('visibility', 'hidden');
+          $char.css('visibility', 'hidden');
         }
         count -= 1;
         if (!count && cb) cb();
@@ -81,10 +82,10 @@
 
       var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
 
-      $this.text() ? 
-        setTimeout(function () { animate($this, options.effect, complete) }, delay) :
+      $char.text() ? 
+        setTimeout(function () { animate($char, options.effect, complete) }, delay) :
         complete();
-    })
+    });
   };
 
   var Textillate = function (element, options) {
@@ -239,6 +240,7 @@
       delayScale: 1.5,
       delay: 50,
       sync: false,
+      reverse: false,
       shuffle: false,
       callback: function () {}
     },
@@ -247,6 +249,7 @@
       delayScale: 1.5,
       delay: 50,
       sync: false,
+      reverse: false,
       shuffle: false,
       callback: function () {}
     },

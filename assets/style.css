@@ -208,8 +208,8 @@ a:hover {
 }
 
 .playground .controls select {
-  width: 50%;
-  margin-right: 10px;
+  width: 48%;
+  margin-right: 4px;
 }
 
 @media (max-width: 480px) {

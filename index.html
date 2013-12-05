@@ -62,14 +62,22 @@
                   <div class="control col-1-2">
                     <label>In Animation</label>
                     <select data-key="effect" data-type="in"></select>
-                    <label class="inline checkbox"><input type="checkbox" data-key="sync" data-type="in" /> Sync</label> 
-                    <label class="inline checkbox"><input type="checkbox" data-key="shuffle" data-type="in" /> Shuffle</label>
+                    <select data-key="type" data-type="in">
+                      <option value="">sequence</option>
+                      <option value="reverse">reverse</option>
+                      <option value="sync">sync</option>
+                      <option value="shuffle">shuffle</option>
+                    </select>
                   </div>
                   <div class="control col-1-2">
                     <label>Out Animation</label>
                     <select data-key="effect" data-type="out"></select>
-                    <label class="inline checkbox"><input type="checkbox" data-key="sync" data-type="out" /> Sync</label>
-                    <label class="inline checkbox"><input type="checkbox" data-key="shuffle" data-type="out" checked="checked" /> Shuffle</label>
+                    <select data-key="type" data-type="out">
+                      <option value="">sequence</option>
+                      <option value="reverse">reverse</option>
+                      <option value="sync">sync</option>
+                      <option selected="selected" value="shuffle">shuffle</option>
+                    </select>
                   </div>
                 </form>
               </div>
@@ -118,15 +126,26 @@
       var data = { 
         loop: true, 
         in: { callback: log('in callback called.') }, 
-        out: { callback: log('out callback called.') } 
+        out: { callback: log('out callback called.') }
       };
       
-      $form.find('[data-key]').each(function () {
+      $form.find('[data-key="effect"]').each(function () {
         var $this = $(this)
           , key = $this.data('key')
           , type = $this.data('type');
 
-          data[type][key] = $this.is(':checkbox') ? $this.is(':checked') : $this.val();
+          data[type][key] = $this.val();
+      });
+
+      $form.find('[data-key="type"]').each(function () {
+        var $this = $(this)
+          , key = $this.data('key')
+          , type = $this.data('type')
+          , val = $this.val();
+
+          data[type].shuffle = (val === 'shuffle');
+          data[type].reverse = (val === 'reverse');
+          data[type].sync = (val === 'sync');
       });
 
       return data;

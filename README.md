@@ -1,4 +1,4 @@
-#Textillate.js v0.2.0
+#Textillate.js v0.3.0
 
 See a live demo [here](http://jschr.github.com/textillate/).
 
@@ -103,6 +103,10 @@ $('.tlt').textillate({
     // (note that shuffle doesn't make sense with sync = true)
     shuffle: false,
 
+    // reverse the character sequence 
+    // (note that reverse doesn't make sense with sync = true)
+    reverse: false,
+
     // callback that executes once the animation has finished
     callback: function () {}
   },
@@ -114,6 +118,7 @@ $('.tlt').textillate({
     delay: 50,
     sync: false,
     shuffle: false,
+    reverse: false,
     callback: function () {}
   },
 
@@ -138,3 +143,7 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
   // do something
 });
 ```
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jschr/textillate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
