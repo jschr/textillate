@@ -124,8 +124,8 @@
     };
 
     base.triggerEvent = function (name) {
-      var e = $.Event(name + '.tlt', { data: base });
-      $element.trigger(e);
+      var e = $.Event(name + '.tlt');
+      $element.trigger(e, base);
       return e;
     };
 
