@@ -136,6 +136,8 @@
         , options = $.extend({}, base.options, getData($elem))
         , $chars;
 
+      $elem.addClass('current');
+
       base.triggerEvent('inAnimationBegin');
 
       base.$current
@@ -176,6 +178,8 @@
       var $elem = base.$texts.find(':nth-child(' + (base.currentIndex + 1) + ')')
         , $chars = base.$current.find('[class^="char"]')
         , options = $.extend({}, base.options, getData($elem));
+
+      $elem.removeClass('current');
 
       base.triggerEvent('outAnimationBegin');
 
