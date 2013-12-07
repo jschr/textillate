@@ -179,11 +179,10 @@
         , $chars = base.$current.find('[class^="char"]')
         , options = $.extend({}, base.options, getData($elem));
 
-      $elem.removeClass('current');
-
       base.triggerEvent('outAnimationBegin');
 
       animateChars($chars, options.out, function () {
+        $elem.removeClass('current');
         base.triggerEvent('outAnimationEnd');
         if (options.out.callback) options.out.callback();
         if (cb) cb(base);
