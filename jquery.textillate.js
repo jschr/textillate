@@ -106,9 +106,9 @@
         .text(base.$texts.find(':first-child').html())
         .prependTo($element);
 
-      if (isInEffect(options.effect)) {
+      if (isInEffect(options.in.effect)) {
         base.$current.css('visibility', 'hidden');
-      } else if (isOutEffect(options.effect)) {
+      } else if (isOutEffect(options.out.effect)) {
         base.$current.css('visibility', 'visible');
       }
 
