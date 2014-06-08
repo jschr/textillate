@@ -114,6 +114,8 @@
 
       base.setOptions(options);
 
+      base.timeoutRun = null;
+
       setTimeout(function () {
         base.options.autoStart && base.start();
       }, base.options.initialDelay)
@@ -204,7 +206,7 @@
           } else {
             index = index % length;
 
-            setTimeout(function () {
+            base.timeoutRun = setTimeout(function () {
               base.out(function () {
                 run(index)
               });
@@ -212,6 +214,13 @@
           }
         });
       }(index || 0));
+    };
+
+    base.stop = function () {
+      if (base.timeoutRun) {
+        clearInterval(base.timeoutRun);
+        base.timeoutRun = null;
+      }
     };
 
     base.init();
