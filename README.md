@@ -144,6 +144,10 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
 });
 ```
 
+##Methods
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jschr/textillate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+* `$element.textillate('start')` - Manually start/restart textillate
+* `$element.textillate('stop')` - Manually pause/stop textillate
+* `$element.textillate('in')` - Retrigger the current text's in animation
+* `$element.textillate('out')` - Retrigger the current text's out animation
 
