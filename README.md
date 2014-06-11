@@ -151,3 +151,5 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
 * `$element.textillate('in')` - Retrigger the current text's in animation
 * `$element.textillate('out')` - Retrigger the current text's out animation
 
+##Code Samples
+* [textillate.js + bounce.js](http://codepen.io/jschr/pen/GaJCi)
