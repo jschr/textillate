@@ -148,8 +148,8 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
 
 * `$element.textillate('start')` - Manually start/restart textillate
 * `$element.textillate('stop')` - Manually pause/stop textillate
-* `$element.textillate('in')` - Retrigger the current text's in animation
-* `$element.textillate('out')` - Retrigger the current text's out animation
+* `$element.textillate('in')` - Trigger the current text's in animation
+* `$element.textillate('out')` - Trigger the current text's out animation
 
 ##Code Samples
 * [textillate.js + bounce.js](http://codepen.io/jschr/pen/GaJCi)
