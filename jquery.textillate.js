@@ -17,6 +17,12 @@
     return /Out/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.outEffects) >= 0;
   };
 
+
+  function stringToBoolean(str) {
+    if (str !== "true" && str !== "false") return str;
+    return (str === "true");
+  };
+	  
   // custom get data api method
   function getData (node) {
     var attrs = node.attributes || []
@@ -25,13 +31,7 @@
     if (!attrs.length) return data;
 
     $.each(attrs, function (i, attr) {
-
-      function stringToBoolean(str) {
-          if (str !== "true" && str !== "false") return str;
-		  return (str === "true");
-	  }
-	  
-	  var nodeName = attr.nodeName.replace(/delayscale/, 'delayScale');
+      var nodeName = attr.nodeName.replace(/delayscale/, 'delayScale');
       if (/^data-in-*/.test(nodeName)) {
         data.in = data.in || {};
         data.in[nodeName.replace(/data-in-/, '')] = stringToBoolean(attr.nodeValue);
@@ -142,7 +142,7 @@
       index = index || 0;
        
       var $elem = base.$texts.find(':nth-child(' + (index + 1) + ')')
-        , options = $.extend(true, {}, base.options, $elem.length?getData($elem[0]):{})
+        , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
         , $chars;
 
       $elem.addClass('current');
@@ -186,7 +186,7 @@
     base.out = function (cb) {
       var $elem = base.$texts.find(':nth-child(' + (base.currentIndex + 1) + ')')
         , $chars = base.$current.find('[class^="char"]')
-        , options = $.extend(true, {}, base.options, $elem.length?getData($elem[0]):{})
+        , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
 
       base.triggerEvent('outAnimationBegin');
 
