@@ -25,14 +25,21 @@
     if (!attrs.length) return data;
 
     $.each(attrs, function (i, attr) {
-      if (/^data-in-*/.test(attr.nodeName)) {
+
+      function stringToBoolean(str) {
+          if (str !== "true" && str !== "false") return str;
+		  return (str === "true");
+	  }
+	  
+	  var nodeName = attr.nodeName.replace(/delayscale/, 'delayScale');
+      if (/^data-in-*/.test(nodeName)) {
         data.in = data.in || {};
-        data.in[attr.nodeName.replace(/data-in-/, '')] = attr.nodeValue;
-      } else if (/^data-out-*/.test(attr.nodeName)) {
+        data.in[nodeName.replace(/data-in-/, '')] = stringToBoolean(attr.nodeValue);
+      } else if (/^data-out-*/.test(nodeName)) {
         data.out = data.out || {};
-        data.out[attr.nodeName.replace(/data-out-/, '')] = attr.nodeValue;
-      } else if (/^data-*/.test(attr.nodeName)) {
-        data[attr.nodeName] = attr.nodeValue;
+        data.out[nodeName.replace(/data-out-/, '')] =stringToBoolean(attr.nodeValue);
+      } else if (/^data-*/.test(nodeName)) {
+        data[nodeName] = stringToBoolean(attr.nodeValue);
       }
     })
 
@@ -135,7 +142,7 @@
       index = index || 0;
        
       var $elem = base.$texts.find(':nth-child(' + (index + 1) + ')')
-        , options = $.extend({}, base.options, getData($elem))
+        , options = $.extend(true, {}, base.options, $elem.length?getData($elem[0]):{})
         , $chars;
 
       $elem.addClass('current');
@@ -179,7 +186,7 @@
     base.out = function (cb) {
       var $elem = base.$texts.find(':nth-child(' + (base.currentIndex + 1) + ')')
         , $chars = base.$current.find('[class^="char"]')
-        , options = $.extend({}, base.options, getData($elem));
+        , options = $.extend(true, {}, base.options, $elem.length?getData($elem[0]):{})
 
       base.triggerEvent('outAnimationBegin');
 
