@@ -39,7 +39,7 @@
         data.out = data.out || {};
         data.out[nodeName.replace(/data-out-/, '')] =stringToBoolean(attr.nodeValue);
       } else if (/^data-*/.test(nodeName)) {
-        data[nodeName] = stringToBoolean(attr.nodeValue);
+        data[nodeName.replace(/data-/, '')] = stringToBoolean(attr.nodeValue);
       }
     })
 
