@@ -1,4 +1,4 @@
-#Textillate.js v0.3.1
+#Textillate.js v0.3.2
 
 See a live demo [here](http://jschr.github.com/textillate/).
 
