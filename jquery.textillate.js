@@ -141,7 +141,7 @@
     base.in = function (index, cb) {
       index = index || 0;
        
-      var $elem = base.$texts.find(':nth-child(' + (index + 1) + ')')
+      var $elem = base.$texts.find(':nth-child(' + ((index||0) + 1) + ')')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
         , $chars;
 
@@ -184,7 +184,7 @@
     };
 
     base.out = function (cb) {
-      var $elem = base.$texts.find(':nth-child(' + (base.currentIndex + 1) + ')')
+      var $elem = base.$texts.find(':nth-child(' + ((base.currentIndex||0) + 1) + ')')
         , $chars = base.$current.find('[class^="char"]')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
 
