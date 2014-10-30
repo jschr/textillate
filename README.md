@@ -148,6 +148,8 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
 
 * `$element.textillate('start')` - Manually start/restart textillate
 * `$element.textillate('start', index )` - Manually current start/restart textillate
+* `$element.textillate('next')` - Manually next textillate
+* `$element.textillate('prev')` - Manually previous textillate
 * `$element.textillate('stop')` - Manually pause/stop textillate
 * `$element.textillate('in')` - Trigger the current text's in animation
 * `$element.textillate('out')` - Trigger the current text's out animation
