@@ -101,7 +101,6 @@
 
     base.init = function () {
       base.$texts = $element.find(options.selector);
-      
       if (!base.$texts.length) {
         base.$texts = $('<ul class="texts"><li>' + $element.html() + '</li></ul>');
         $element.html(base.$texts);
@@ -141,7 +140,7 @@
     base.in = function (index, cb) {
       index = index || 0;
        
-      var $elem = base.$texts.find(':nth-child(' + ((index||0) + 1) + ')')
+      var $elem = base.$texts.find(':nth-child(' + (index + 1) + ')')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
         , $chars;
 
@@ -184,7 +183,7 @@
     };
 
     base.out = function (cb) {
-      var $elem = base.$texts.find(':nth-child(' + ((base.currentIndex||0) + 1) + ')')
+      var $elem = base.$texts.find(':nth-child(' + (base.currentIndex + 1) + ')')
         , $chars = base.$current.find('[class^="char"]')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
 
@@ -212,16 +211,47 @@
             base.triggerEvent('end');
           } else {
             index = index % length;
-
-            base.timeoutRun = setTimeout(function () {
-              base.out(function () {
-                run(index)
-              });
-            }, base.options.minDisplayTime);
+            
+            if(base.options.minDisplayTime > 0){
+            	base.timeoutRun = setTimeout(function () {
+            		base.out(function () {
+            			run(index)
+            		});
+            	}, base.options.minDisplayTime);
+            }
           }
         });
       }(index || 0));
     };
+    
+    base.next = function(){
+    	var length = base.$texts.children().length;
+    	var index = base.currentIndex+1;
+    	base.in(index, function () {
+    		if (!base.options.loop && index >= length) {
+    			if (base.options.callback) base.options.callback();
+                	base.triggerEvent('end');
+    		}else{
+    			index = index % length;
+    			base.currentIndex = index;
+    			
+    		}
+    	});
+    };
+    base.prev = function(){
+    	var length = base.$texts.children().length;
+    	var index = base.currentIndex-1;
+
+    	base.in(index, function () {
+    		if (!base.options.loop && index <= 0) {
+    			base.currentIndex = 0;
+    			if (base.options.callback) base.options.callback();
+                	base.triggerEvent('end');
+    		}else{
+    			base.currentIndex = length;
+    		}
+    	});
+    }
 
     base.stop = function () {
       if (base.timeoutRun) {
