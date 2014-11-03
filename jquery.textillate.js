@@ -199,7 +199,8 @@
     };
 
     base.start = function (index) {
-      base.triggerEvent('start');
+      setTimeout(function () {
+        base.triggerEvent('start');
 
       (function run (index) {
         base.in(index, function () {
@@ -221,6 +222,7 @@
           }
         });
       }(index || 0));
+      }, base.options.initialDelay); 
     };
 
     base.stop = function () {
