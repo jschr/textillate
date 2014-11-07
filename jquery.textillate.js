@@ -241,9 +241,17 @@
         , data = $this.data('textillate')
         , options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
 
-      if (!data) { 
-        $this.data('textillate', (data = new Textillate(this, options)));
-      } else if (typeof settings == 'string') {
+      if (data) {
+        var text;
+        if(!(text = $this.find('.texts').text())){
+          text = $this.text();
+        }
+        $this.empty();
+        $this.text(text);
+      }
+      $this.data('textillate', (data = new Textillate(this, options)));
+
+      if (typeof settings == 'string') {
         data[settings].apply(data, [].concat(args));
       } else {
         data.setOptions.call(data, options);
