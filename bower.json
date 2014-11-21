@@ -1,0 +1,14 @@
+{
+  "name": "textillate",
+  "version": "0.3.3",
+  "main": "jquery.textillate.js",
+  "ignore": [
+    "assets",
+    "**/.*"
+  ],
+  "dependencies": {
+    "letteringjs": "https://github.com/luozhihua/Lettering.js.git#0.6.2",
+    "animate.css": ">= 3.1.0",
+    "jquery": ">= 1.6.2"
+  }
+}
