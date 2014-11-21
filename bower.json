@@ -1,0 +1,14 @@
+{
+  "name": "textillate",
+  "version": "0.6.1",
+  "main": "jquery.textillate.js",
+  "ignore": [
+    "assets",
+    "**/.*"
+  ],
+  "dependencies": {
+    "letteringjs": ">= 0.6.1",
+    "animate.css": ">= 3.1.0",
+    "jquery": ">= 1.6.2"
+  }
+}
