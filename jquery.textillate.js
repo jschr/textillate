@@ -7,47 +7,50 @@
  */
 
 (function ($) {
-  "use strict"; 
+
+  'use strict';
 
   function isInEffect (effect) {
     return /In/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.inEffects) >= 0;
-  };
+  }
 
   function isOutEffect (effect) {
     return /Out/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.outEffects) >= 0;
-  };
+  }
 
 
   function stringToBoolean(str) {
-    if (str !== "true" && str !== "false") return str;
-    return (str === "true");
-  };
-	  
+    if (str !== 'true' && str !== 'false') {
+      return str;
+    }
+    return (str === 'true');
+  }
+
   // custom get data api method
   function getData (node) {
-    var attrs = node.attributes || []
-      , data = {};
+    var attrs = node.attributes || [],
+      data = {};
 
-    if (!attrs.length) return data;
+    if (!attrs.length) {return data;}
 
     $.each(attrs, function (i, attr) {
       var nodeName = attr.nodeName.replace(/delayscale/, 'delayScale');
       if (/^data-in-*/.test(nodeName)) {
-        data.in = data.in || {};
-        data.in[nodeName.replace(/data-in-/, '')] = stringToBoolean(attr.nodeValue);
+        data['in'] = data['in'] || {};
+        data['in'][nodeName.replace(/data-in-/, '')] = stringToBoolean(attr.nodeValue);
       } else if (/^data-out-*/.test(nodeName)) {
         data.out = data.out || {};
         data.out[nodeName.replace(/data-out-/, '')] =stringToBoolean(attr.nodeValue);
       } else if (/^data-*/.test(nodeName)) {
         data[nodeName.replace(/data-/, '')] = stringToBoolean(attr.nodeValue);
       }
-    })
+    });
 
     return data;
   }
 
   function shuffle (o) {
-      for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+      for (var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x){}
       return o;
   }
 
@@ -58,25 +61,30 @@
 
     $c.one('animationend webkitAnimationEnd oAnimationEnd', function () {
         $c.removeClass('animated ' + effect);
-        cb && cb();
+        if (cb) {
+          cb();
+        }
     });
   }
 
   function animateChars ($chars, options, cb) {
-    var that = this
-      , count = $chars.length;
+    var count = $chars.length;
 
     if (!count) {
-      cb && cb();
+      if (cb) {cb();}
       return;
-    } 
+    }
 
-    if (options.shuffle) $chars = shuffle($chars);
-    if (options.reverse) $chars = $chars.toArray().reverse();
+    if (options.shuffle) {
+      $chars = shuffle($chars);
+    }
+    if (options.reverse) {
+      $chars = $chars.toArray().reverse();
+    }
 
     $.each($chars, function (i, c) {
       var $char = $(c);
-      
+
       function complete () {
         if (isInEffect(options.effect)) {
           $char.css('visibility', 'visible');
@@ -84,24 +92,28 @@
           $char.css('visibility', 'hidden');
         }
         count -= 1;
-        if (!count && cb) cb();
+        if (!count && cb) {
+          cb();
+        }
       }
 
       var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
 
-      $char.text() ? 
-        setTimeout(function () { animate($char, options.effect, complete) }, delay) :
+      if ($char.text()) {
+        setTimeout(function () { animate($char, options.effect, complete); }, delay);
+      } else {
         complete();
+      }
     });
-  };
+  }
 
   var Textillate = function (element, options) {
-    var base = this
-      , $element = $(element);
+    var base = this,
+        $element = $(element);
 
     base.init = function () {
       base.$texts = $element.find(options.selector);
-      
+
       if (!base.$texts.length) {
         base.$texts = $('<ul class="texts"><li>' + $element.html() + '</li></ul>');
         $element.html(base.$texts);
@@ -113,7 +125,7 @@
         .text(base.$texts.find(':first-child').html())
         .prependTo($element);
 
-      if (isInEffect(options.in.effect)) {
+      if (isInEffect(options['in'].effect)) {
         base.$current.css('visibility', 'hidden');
       } else if (isOutEffect(options.out.effect)) {
         base.$current.css('visibility', 'visible');
@@ -124,8 +136,8 @@
       base.timeoutRun = null;
 
       setTimeout(function () {
-        base.options.autoStart && base.start();
-      }, base.options.initialDelay)
+        if (base.options.autoStart) {base.start();}
+      }, base.options.initialDelay);
     };
 
     base.setOptions = function (options) {
@@ -138,12 +150,12 @@
       return e;
     };
 
-    base.in = function (index, cb) {
+    base['in'] = function (index, cb) {
       index = index || 0;
-       
-      var $elem = base.$texts.find(':nth-child(' + ((index||0) + 1) + ')')
-        , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
-        , $chars;
+
+      var $elem = base.$texts.find(':nth-child(' + ((index||0) + 1) + ')'),
+        options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {}),
+        $chars;
 
       $elem.addClass('current');
 
@@ -154,7 +166,7 @@
         .lettering('words');
 
       base.$current.find('[class^="word"]')
-          .css({ 
+          .css({
             'display': 'inline-block',
             // fix for poor ios performance
             '-webkit-transform': 'translate3d(0,0,0)',
@@ -162,39 +174,47 @@
                  '-o-transform': 'translate3d(0,0,0)',
                     'transform': 'translate3d(0,0,0)'
           })
-          .each(function () { $(this).lettering() });
+          .each(function () { $(this).lettering(); });
 
       $chars = base.$current
         .find('[class^="char"]')
         .css('display', 'inline-block');
 
-      if (isInEffect(options.in.effect)) {
+      if (isInEffect(options['in'].effect)) {
         $chars.css('visibility', 'hidden');
-      } else if (isOutEffect(options.in.effect)) {
+      } else if (isOutEffect(options['in'].effect)) {
         $chars.css('visibility', 'visible');
       }
 
       base.currentIndex = index;
 
-      animateChars($chars, options.in, function () {
+      animateChars($chars, options['in'], function () {
         base.triggerEvent('inAnimationEnd');
-        if (options.in.callback) options.in.callback();
-        if (cb) cb(base);
+        if (options['in'].callback) {
+          options['in'].callback();
+        }
+        if (cb) {
+          cb(base);
+        }
       });
     };
 
     base.out = function (cb) {
-      var $elem = base.$texts.find(':nth-child(' + ((base.currentIndex||0) + 1) + ')')
-        , $chars = base.$current.find('[class^="char"]')
-        , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
+      var $elem = base.$texts.find(':nth-child(' + ((base.currentIndex||0) + 1) + ')'),
+        $chars = base.$current.find('[class^="char"]'),
+        options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {});
 
       base.triggerEvent('outAnimationBegin');
 
       animateChars($chars, options.out, function () {
         $elem.removeClass('current');
         base.triggerEvent('outAnimationEnd');
-        if (options.out.callback) options.out.callback();
-        if (cb) cb(base);
+        if (options.out.callback) {
+          options.out.callback();
+        }
+        if (cb) {
+          cb(base);
+        }
       });
     };
 
@@ -203,26 +223,28 @@
         base.triggerEvent('start');
 
       (function run (index) {
-        base.in(index, function () {
+        base['in'](index, function () {
           var length = base.$texts.children().length;
 
           index += 1;
-          
+
           if (!base.options.loop && index >= length) {
-            if (base.options.callback) base.options.callback();
+            if (base.options.callback) {
+              base.options.callback();
+            }
             base.triggerEvent('end');
           } else {
             index = index % length;
 
             base.timeoutRun = setTimeout(function () {
               base.out(function () {
-                run(index)
+                run(index);
               });
             }, base.options.minDisplayTime);
           }
         });
       }(index || 0));
-      }, base.options.initialDelay); 
+      }, base.options.initialDelay);
     };
 
     base.stop = function () {
@@ -233,30 +255,30 @@
     };
 
     base.init();
-  }
+  };
 
   $.fn.textillate = function (settings, args) {
     return this.each(function () {
-      var $this = $(this)
-        , data = $this.data('textillate')
-        , options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
+      var $this = $(this),
+        data = $this.data('textillate'),
+        options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings === 'object' && settings);
 
-      if (!data) { 
+      if (!data) {
         $this.data('textillate', (data = new Textillate(this, options)));
-      } else if (typeof settings == 'string') {
+      } else if (typeof settings === 'string') {
         data[settings].apply(data, [].concat(args));
       } else {
         data.setOptions.call(data, options);
       }
-    })
+    });
   };
-  
+
   $.fn.textillate.defaults = {
     selector: '.texts',
     loop: false,
     minDisplayTime: 2000,
     initialDelay: 0,
-    in: {
+    'in': {
       effect: 'fadeInLeftBig',
       delayScale: 1.5,
       delay: 50,
