@@ -51,37 +51,37 @@
       return o;
   }
 
-  function animate ($c, effect, cb) {
-    $c.addClass('animated ' + effect)
+  function animate ($t, effect, cb) {
+    $t.addClass('animated ' + effect)
       .css('visibility', 'visible')
       .show();
 
-    $c.one('animationend webkitAnimationEnd oAnimationEnd', function () {
-        $c.removeClass('animated ' + effect);
+    $t.one('animationend webkitAnimationEnd oAnimationEnd', function () {
+        $t.removeClass('animated ' + effect);
         cb && cb();
     });
   }
 
-  function animateChars ($chars, options, cb) {
+  function animateChars ($tokens, options, cb) {
     var that = this
-      , count = $chars.length;
+      , count = $tokens.length;
 
     if (!count) {
       cb && cb();
       return;
     } 
 
-    if (options.shuffle) $chars = shuffle($chars);
-    if (options.reverse) $chars = $chars.toArray().reverse();
+    if (options.shuffle) $tokens = shuffle($tokens);
+    if (options.reverse) $tokens = $tokens.toArray().reverse();
 
-    $.each($chars, function (i, c) {
-      var $char = $(c);
+    $.each($tokens, function (i, t) {
+      var $token = $(t);
       
       function complete () {
         if (isInEffect(options.effect)) {
-          $char.css('visibility', 'visible');
+          $token.css('visibility', 'visible');
         } else if (isOutEffect(options.effect)) {
-          $char.css('visibility', 'hidden');
+          $token.css('visibility', 'hidden');
         }
         count -= 1;
         if (!count && cb) cb();
@@ -89,8 +89,8 @@
 
       var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
 
-      $char.text() ? 
-        setTimeout(function () { animate($char, options.effect, complete) }, delay) :
+      $token.text() ? 
+        setTimeout(function () { animate($token, options.effect, complete) }, delay) :
         complete();
     });
   };
@@ -143,7 +143,7 @@
        
       var $elem = base.$texts.find(':nth-child(' + ((index||0) + 1) + ')')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
-        , $chars;
+        , $tokens;
 
       $elem.addClass('current');
 
@@ -164,19 +164,19 @@
           })
           .each(function () { $(this).lettering() });
 
-      $chars = base.$current
-        .find('[class^="char"]')
+      $tokens = base.$current
+        .find('[class^="' + base.options.type + '"]')
         .css('display', 'inline-block');
 
       if (isInEffect(options.in.effect)) {
-        $chars.css('visibility', 'hidden');
+        $tokens.css('visibility', 'hidden');
       } else if (isOutEffect(options.in.effect)) {
-        $chars.css('visibility', 'visible');
+        $tokens.css('visibility', 'visible');
       }
 
       base.currentIndex = index;
 
-      animateChars($chars, options.in, function () {
+      animateChars($tokens, options.in, function () {
         base.triggerEvent('inAnimationEnd');
         if (options.in.callback) options.in.callback();
         if (cb) cb(base);
@@ -185,12 +185,12 @@
 
     base.out = function (cb) {
       var $elem = base.$texts.find(':nth-child(' + ((base.currentIndex||0) + 1) + ')')
-        , $chars = base.$current.find('[class^="char"]')
+        , $tokens = base.$current.find('[class^="' + base.options.type + '"]')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
 
       base.triggerEvent('outAnimationBegin');
 
-      animateChars($chars, options.out, function () {
+      animateChars($tokens, options.out, function () {
         $elem.removeClass('current');
         base.triggerEvent('outAnimationEnd');
         if (options.out.callback) options.out.callback();
@@ -277,7 +277,8 @@
     autoStart: true,
     inEffects: [],
     outEffects: [ 'hinge' ],
-    callback: function () {}
+    callback: function () {},
+    type: 'char'
   };
 
 }(jQuery));
