@@ -153,16 +153,19 @@
         .text($elem.html())
         .lettering('words');
 
-      base.$current.find('[class^="word"]')
-          .css({ 
-            'display': 'inline-block',
-            // fix for poor ios performance
-            '-webkit-transform': 'translate3d(0,0,0)',
-               '-moz-transform': 'translate3d(0,0,0)',
-                 '-o-transform': 'translate3d(0,0,0)',
-                    'transform': 'translate3d(0,0,0)'
-          })
-          .each(function () { $(this).lettering() });
+      // split words to individual characters if token type is set to 'char'
+      if (base.type == "char") {
+        base.$current.find('[class^="word"]')
+            .css({
+              'display': 'inline-block',
+              // fix for poor ios performance
+              '-webkit-transform': 'translate3d(0,0,0)',
+              '-moz-transform': 'translate3d(0,0,0)',
+              '-o-transform': 'translate3d(0,0,0)',
+              'transform': 'translate3d(0,0,0)'
+            })
+            .each(function () { $(this).lettering() });
+      }
 
       $tokens = base.$current
         .find('[class^="' + base.options.type + '"]')
@@ -176,7 +179,7 @@
 
       base.currentIndex = index;
 
-      animateChars($tokens, options.in, function () {
+      animateTokens($tokens, options.in, function () {
         base.triggerEvent('inAnimationEnd');
         if (options.in.callback) options.in.callback();
         if (cb) cb(base);
@@ -190,7 +193,7 @@
 
       base.triggerEvent('outAnimationBegin');
 
-      animateChars($tokens, options.out, function () {
+      animateTokens($tokens, options.out, function () {
         $elem.removeClass('current');
         base.triggerEvent('outAnimationEnd');
         if (options.out.callback) options.out.callback();
