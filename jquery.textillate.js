@@ -62,7 +62,7 @@
     });
   }
 
-  function animateChars ($tokens, options, cb) {
+  function animateTokens ($tokens, options, cb) {
     var that = this
       , count = $tokens.length;
 
