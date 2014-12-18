@@ -110,7 +110,7 @@
       base.$texts.hide();
 
       base.$current = $('<span>')
-        .text(base.$texts.find(':first-child').html())
+        .html(base.$texts.find(':first-child').html())
         .prependTo($element);
 
       if (isInEffect(options.in.effect)) {
@@ -150,7 +150,7 @@
       base.triggerEvent('inAnimationBegin');
 
       base.$current
-        .text($elem.html())
+        .html($elem.html())
         .lettering('words');
 
       // split words to individual characters if token type is set to 'char'
