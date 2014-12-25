@@ -1,4 +1,4 @@
-#Textillate.js v0.3.2
+#Textillate.js v0.4.0
 
 See a live demo [here](http://jschr.github.com/textillate/).
 
@@ -123,7 +123,10 @@ $('.tlt').textillate({
   },
 
   // callback that executes once textillate has finished 
-  callback: function () {}
+  callback: function () {},
+
+  // set the type of token to animate (available types: 'char' and 'word')
+  type: 'char'
 });
 ```
 

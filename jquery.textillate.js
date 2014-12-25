@@ -7,7 +7,7 @@
  */
 
 (function ($) {
-  "use strict"; 
+  "use strict";
 
   function isInEffect (effect) {
     return /In/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.inEffects) >= 0;
@@ -22,7 +22,7 @@
     if (str !== "true" && str !== "false") return str;
     return (str === "true");
   };
-	  
+
   // custom get data api method
   function getData (node) {
     var attrs = node.attributes || []
@@ -51,37 +51,37 @@
       return o;
   }
 
-  function animate ($c, effect, cb) {
-    $c.addClass('animated ' + effect)
+  function animate ($t, effect, cb) {
+    $t.addClass('animated ' + effect)
       .css('visibility', 'visible')
       .show();
 
-    $c.one('animationend webkitAnimationEnd oAnimationEnd', function () {
-        $c.removeClass('animated ' + effect);
+    $t.one('animationend webkitAnimationEnd oAnimationEnd', function () {
+        $t.removeClass('animated ' + effect);
         cb && cb();
     });
   }
 
-  function animateChars ($chars, options, cb) {
+  function animateTokens ($tokens, options, cb) {
     var that = this
-      , count = $chars.length;
+      , count = $tokens.length;
 
     if (!count) {
       cb && cb();
       return;
-    } 
+    }
 
-    if (options.shuffle) $chars = shuffle($chars);
-    if (options.reverse) $chars = $chars.toArray().reverse();
+    if (options.shuffle) $tokens = shuffle($tokens);
+    if (options.reverse) $tokens = $tokens.toArray().reverse();
 
-    $.each($chars, function (i, c) {
-      var $char = $(c);
-      
+    $.each($tokens, function (i, t) {
+      var $token = $(t);
+
       function complete () {
         if (isInEffect(options.effect)) {
-          $char.css('visibility', 'visible');
+          $token.css('visibility', 'visible');
         } else if (isOutEffect(options.effect)) {
-          $char.css('visibility', 'hidden');
+          $token.css('visibility', 'hidden');
         }
         count -= 1;
         if (!count && cb) cb();
@@ -89,8 +89,8 @@
 
       var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
 
-      $char.text() ? 
-        setTimeout(function () { animate($char, options.effect, complete) }, delay) :
+      $token.text() ?
+        setTimeout(function () { animate($token, options.effect, complete) }, delay) :
         complete();
     });
   };
@@ -101,7 +101,7 @@
 
     base.init = function () {
       base.$texts = $element.find(options.selector);
-      
+
       if (!base.$texts.length) {
         base.$texts = $('<ul class="texts"><li>' + $element.html() + '</li></ul>');
         $element.html(base.$texts);
@@ -110,7 +110,7 @@
       base.$texts.hide();
 
       base.$current = $('<span>')
-        .text(base.$texts.find(':first-child').html())
+        .html(base.$texts.find(':first-child').html())
         .prependTo($element);
 
       if (isInEffect(options.in.effect)) {
@@ -140,43 +140,46 @@
 
     base.in = function (index, cb) {
       index = index || 0;
-       
+
       var $elem = base.$texts.find(':nth-child(' + ((index||0) + 1) + ')')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
-        , $chars;
+        , $tokens;
 
       $elem.addClass('current');
 
       base.triggerEvent('inAnimationBegin');
 
       base.$current
-        .text($elem.html())
+        .html($elem.html())
         .lettering('words');
 
-      base.$current.find('[class^="word"]')
-          .css({ 
-            'display': 'inline-block',
-            // fix for poor ios performance
-            '-webkit-transform': 'translate3d(0,0,0)',
-               '-moz-transform': 'translate3d(0,0,0)',
-                 '-o-transform': 'translate3d(0,0,0)',
-                    'transform': 'translate3d(0,0,0)'
-          })
-          .each(function () { $(this).lettering() });
+      // split words to individual characters if token type is set to 'char'
+      if (base.options.type == "char") {
+        base.$current.find('[class^="word"]')
+            .css({
+              'display': 'inline-block',
+              // fix for poor ios performance
+              '-webkit-transform': 'translate3d(0,0,0)',
+              '-moz-transform': 'translate3d(0,0,0)',
+              '-o-transform': 'translate3d(0,0,0)',
+              'transform': 'translate3d(0,0,0)'
+            })
+            .each(function () { $(this).lettering() });
+      }
 
-      $chars = base.$current
-        .find('[class^="char"]')
+      $tokens = base.$current
+        .find('[class^="' + base.options.type + '"]')
         .css('display', 'inline-block');
 
       if (isInEffect(options.in.effect)) {
-        $chars.css('visibility', 'hidden');
+        $tokens.css('visibility', 'hidden');
       } else if (isOutEffect(options.in.effect)) {
-        $chars.css('visibility', 'visible');
+        $tokens.css('visibility', 'visible');
       }
 
       base.currentIndex = index;
 
-      animateChars($chars, options.in, function () {
+      animateTokens($tokens, options.in, function () {
         base.triggerEvent('inAnimationEnd');
         if (options.in.callback) options.in.callback();
         if (cb) cb(base);
@@ -185,12 +188,12 @@
 
     base.out = function (cb) {
       var $elem = base.$texts.find(':nth-child(' + ((base.currentIndex||0) + 1) + ')')
-        , $chars = base.$current.find('[class^="char"]')
+        , $tokens = base.$current.find('[class^="' + base.options.type + '"]')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
 
       base.triggerEvent('outAnimationBegin');
 
-      animateChars($chars, options.out, function () {
+      animateTokens($tokens, options.out, function () {
         $elem.removeClass('current');
         base.triggerEvent('outAnimationEnd');
         if (options.out.callback) options.out.callback();
@@ -207,7 +210,7 @@
           var length = base.$texts.children().length;
 
           index += 1;
-          
+
           if (!base.options.loop && index >= length) {
             if (base.options.callback) base.options.callback();
             base.triggerEvent('end');
@@ -222,7 +225,7 @@
           }
         });
       }(index || 0));
-      }, base.options.initialDelay); 
+      }, base.options.initialDelay);
     };
 
     base.stop = function () {
@@ -241,7 +244,7 @@
         , data = $this.data('textillate')
         , options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
 
-      if (!data) { 
+      if (!data) {
         $this.data('textillate', (data = new Textillate(this, options)));
       } else if (typeof settings == 'string') {
         data[settings].apply(data, [].concat(args));
@@ -250,7 +253,7 @@
       }
     })
   };
-  
+
   $.fn.textillate.defaults = {
     selector: '.texts',
     loop: false,
@@ -277,7 +280,8 @@
     autoStart: true,
     inEffects: [],
     outEffects: [ 'hinge' ],
-    callback: function () {}
+    callback: function () {},
+    type: 'char'
   };
 
 }(jQuery));
