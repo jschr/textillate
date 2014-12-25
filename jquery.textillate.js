@@ -7,7 +7,7 @@
  */
 
 (function ($) {
-  "use strict"; 
+  "use strict";
 
   function isInEffect (effect) {
     return /In/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.inEffects) >= 0;
@@ -22,7 +22,7 @@
     if (str !== "true" && str !== "false") return str;
     return (str === "true");
   };
-	  
+
   // custom get data api method
   function getData (node) {
     var attrs = node.attributes || []
@@ -69,14 +69,14 @@
     if (!count) {
       cb && cb();
       return;
-    } 
+    }
 
     if (options.shuffle) $tokens = shuffle($tokens);
     if (options.reverse) $tokens = $tokens.toArray().reverse();
 
     $.each($tokens, function (i, t) {
       var $token = $(t);
-      
+
       function complete () {
         if (isInEffect(options.effect)) {
           $token.css('visibility', 'visible');
@@ -89,7 +89,7 @@
 
       var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
 
-      $token.text() ? 
+      $token.text() ?
         setTimeout(function () { animate($token, options.effect, complete) }, delay) :
         complete();
     });
@@ -101,7 +101,7 @@
 
     base.init = function () {
       base.$texts = $element.find(options.selector);
-      
+
       if (!base.$texts.length) {
         base.$texts = $('<ul class="texts"><li>' + $element.html() + '</li></ul>');
         $element.html(base.$texts);
@@ -140,7 +140,7 @@
 
     base.in = function (index, cb) {
       index = index || 0;
-       
+
       var $elem = base.$texts.find(':nth-child(' + ((index||0) + 1) + ')')
         , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
         , $tokens;
@@ -154,7 +154,7 @@
         .lettering('words');
 
       // split words to individual characters if token type is set to 'char'
-      if (base.type == "char") {
+      if (base.options.type == "char") {
         base.$current.find('[class^="word"]')
             .css({
               'display': 'inline-block',
@@ -210,7 +210,7 @@
           var length = base.$texts.children().length;
 
           index += 1;
-          
+
           if (!base.options.loop && index >= length) {
             if (base.options.callback) base.options.callback();
             base.triggerEvent('end');
@@ -225,7 +225,7 @@
           }
         });
       }(index || 0));
-      }, base.options.initialDelay); 
+      }, base.options.initialDelay);
     };
 
     base.stop = function () {
@@ -244,7 +244,7 @@
         , data = $this.data('textillate')
         , options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
 
-      if (!data) { 
+      if (!data) {
         $this.data('textillate', (data = new Textillate(this, options)));
       } else if (typeof settings == 'string') {
         data[settings].apply(data, [].concat(args));
@@ -253,7 +253,7 @@
       }
     })
   };
-  
+
   $.fn.textillate.defaults = {
     selector: '.texts',
     loop: false,
