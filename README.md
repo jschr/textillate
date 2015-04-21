@@ -1,4 +1,4 @@
-#Textillate.js v0.4.0
+#Textillate.js v0.4.0  [![JS.ORG](https://img.shields.io/badge/js.org-textillate-ffb400.svg?style=flat-square)](http://js.org)
 
 See a live demo [here](http://jschr.github.com/textillate/).
 
