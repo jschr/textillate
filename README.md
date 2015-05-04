@@ -1,6 +1,6 @@
-#Textillate.js v0.3.0
+#Textillate.js v0.4.0  [![JS.ORG](https://img.shields.io/badge/js.org-textillate-ffb400.svg?style=flat-square)](http://js.org)
 
-See a live demo [here](http://jschr.github.com/textillate/).
+See a live demo [here](http://textillate.js.org/).
 
 Textillate.js combines some awesome libraries to provide an easy-to-use plugin for applying CSS3 animations to any text.
 
@@ -123,7 +123,10 @@ $('.tlt').textillate({
   },
 
   // callback that executes once textillate has finished 
-  callback: function () {}
+  callback: function () {},
+
+  // set the type of token to animate (available types: 'char' and 'word')
+  type: 'char'
 });
 ```
 
@@ -144,6 +147,12 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
 });
 ```
 
+##Methods
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jschr/textillate/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+* `$element.textillate('start')` - Manually start/restart textillate
+* `$element.textillate('stop')` - Manually pause/stop textillate
+* `$element.textillate('in')` - Trigger the current text's in animation
+* `$element.textillate('out')` - Trigger the current text's out animation
 
+##Code Samples
+* [textillate.js + bounce.js](http://codepen.io/jschr/pen/GaJCi)
