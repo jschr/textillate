@@ -244,6 +244,25 @@ a:hover {
   /*visibility: hidden;*/
 }
 
+.playground .viewport .tlt [class"^=char"] {
+    visibility: hidden;
+}
+
+.playground .evil {
+    color: #f44336;
+    font-size: 36px;
+    text-shadow: 1px 2px 0 #3D0909;
+}
+
+.playground .trending-up {
+    color:#c62828;
+    font-size: 60px;
+    position: relative;
+    top: 16px;
+    margin-right: -7px;
+    text-shadow: 1px 2px 0 #3D0909;
+}
+
 .deps {
   font-size: 1.2em;
 }

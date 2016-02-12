@@ -4,6 +4,8 @@
  * MIT licensed
  *
  * Copyright (C) 2012-2013 Jordan Schroter
+ *
+ * Updates for sliderMaker : find - Slidermaker setting -
  */
 
 (function ($) {
@@ -11,22 +13,22 @@
 
   function isInEffect (effect) {
     return /In/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.inEffects) >= 0;
-  };
+  }
 
   function isOutEffect (effect) {
     return /Out/.test(effect) || $.inArray(effect, $.fn.textillate.defaults.outEffects) >= 0;
-  };
+  }
 
 
   function stringToBoolean(str) {
     if (str !== "true" && str !== "false") return str;
     return (str === "true");
-  };
+  }
 
   // custom get data api method
   function getData (node) {
-    var attrs = node.attributes || []
-      , data = {};
+    var attrs = node.attributes || [],
+      data = {};
 
     if (!attrs.length) return data;
 
@@ -41,7 +43,7 @@
       } else if (/^data-*/.test(nodeName)) {
         data[nodeName.replace(/data-/, '')] = stringToBoolean(attr.nodeValue);
       }
-    })
+    });
 
     return data;
   }
@@ -63,8 +65,8 @@
   }
 
   function animateTokens ($tokens, options, cb) {
-    var that = this
-      , count = $tokens.length;
+    var that = this,
+       count = $tokens.length;
 
     if (!count) {
       cb && cb();
@@ -73,10 +75,8 @@
 
     if (options.shuffle) $tokens = shuffle($tokens);
     if (options.reverse) $tokens = $tokens.toArray().reverse();
-
     $.each($tokens, function (i, t) {
       var $token = $(t);
-
       function complete () {
         if (isInEffect(options.effect)) {
           $token.css('visibility', 'visible');
@@ -90,20 +90,18 @@
       var delay = options.sync ? options.delay : options.delay * i * options.delayScale;
 
       $token.text() ?
-        setTimeout(function () { animate($token, options.effect, complete) }, delay) :
-        complete();
+        setTimeout(function () { animate($token, options.effect, complete) }, delay) : complete();
     });
-  };
+  }
 
   var Textillate = function (element, options) {
-    var base = this
-      , $element = $(element);
+    var base = this,
+      $element = $(element);
 
     base.init = function () {
       base.$texts = $element.find(options.selector);
-
       if (!base.$texts.length) {
-        base.$texts = $('<ul class="texts"><li>' + $element.html() + '</li></ul>');
+        base.$texts = $('<ul class="texts"><li><span>' + $element.html() + '</span></li></ul>');
         $element.html(base.$texts);
       }
 
@@ -125,7 +123,7 @@
 
       setTimeout(function () {
         base.options.autoStart && base.start();
-      }, base.options.initialDelay)
+      }, base.options.initialDelay);
     };
 
     base.setOptions = function (options) {
@@ -140,18 +138,17 @@
 
     base.in = function (index, cb) {
       index = index || 0;
-
-      var $elem = base.$texts.find(':nth-child(' + ((index||0) + 1) + ')')
-        , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
-        , $tokens;
+      var $elem = base.$texts.find('li:nth-child(' + ((index||0) + 1) + ')'),
+        options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {}),
+        $tokens;
 
       $elem.addClass('current');
 
       base.triggerEvent('inAnimationBegin');
-
       base.$current
         .html($elem.html())
-        .lettering('words');
+        .lettering('wordsWithTags'); // add tag & class support
+        // .lettering('words');
 
       // split words to individual characters if token type is set to 'char'
       if (base.options.type == "char") {
@@ -164,7 +161,7 @@
               '-o-transform': 'translate3d(0,0,0)',
               'transform': 'translate3d(0,0,0)'
             })
-            .each(function () { $(this).lettering() });
+            .each(function () { $(this).lettering('lettersWithTags'); });
       }
 
       $tokens = base.$current
@@ -187,10 +184,9 @@
     };
 
     base.out = function (cb) {
-      var $elem = base.$texts.find(':nth-child(' + ((base.currentIndex||0) + 1) + ')')
-        , $tokens = base.$current.find('[class^="' + base.options.type + '"]')
-        , options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {})
-
+      var $elem = base.$texts.find('li:nth-child(' + ((base.currentIndex||0) + 1) + ')'),
+        $tokens = base.$current.find('[class^="' + base.options.type + '"]'),
+        options = $.extend(true, {}, base.options, $elem.length ? getData($elem[0]) : {});
       base.triggerEvent('outAnimationBegin');
 
       animateTokens($tokens, options.out, function () {
@@ -219,7 +215,7 @@
 
             base.timeoutRun = setTimeout(function () {
               base.out(function () {
-                run(index)
+                run(index);
               });
             }, base.options.minDisplayTime);
           }
@@ -236,13 +232,13 @@
     };
 
     base.init();
-  }
+  };
 
   $.fn.textillate = function (settings, args) {
     return this.each(function () {
-      var $this = $(this)
-        , data = $this.data('textillate')
-        , options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
+      var $this = $(this),
+        data = $this.data('textillate'),
+        options = $.extend(true, {}, $.fn.textillate.defaults, getData(this), typeof settings == 'object' && settings);
 
       if (!data) {
         $this.data('textillate', (data = new Textillate(this, options)));
@@ -251,7 +247,15 @@
       } else {
         data.setOptions.call(data, options);
       }
-    })
+
+      /*
+       Slidermaker update to pass outEffects to tokens
+       hide each token when effect complete
+      */
+
+      $.fn.textillate.defaults.inEffects = $this.data('textillate').options.inEffects;
+      $.fn.textillate.defaults.outEffects = $this.data('textillate').options.outEffects;
+    });
   };
 
   $.fn.textillate.defaults = {
@@ -260,7 +264,7 @@
     minDisplayTime: 2000,
     initialDelay: 0,
     in: {
-      effect: 'fadeInLeftBig',
+      effect: '',
       delayScale: 1.5,
       delay: 50,
       sync: false,
@@ -269,7 +273,7 @@
       callback: function () {}
     },
     out: {
-      effect: 'hinge',
+      effect: '',
       delayScale: 1.5,
       delay: 50,
       sync: false,
@@ -279,7 +283,7 @@
     },
     autoStart: true,
     inEffects: [],
-    outEffects: [ 'hinge' ],
+    outEffects: [],
     callback: function () {},
     type: 'char'
   };
