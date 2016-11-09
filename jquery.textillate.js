@@ -148,6 +148,7 @@
       $elem.addClass('current');
 
       base.triggerEvent('inAnimationBegin');
+      $element.attr('data-active', $elem.data('id'));
 
       base.$current
         .html($elem.html())
@@ -196,6 +197,7 @@
       animateTokens($tokens, options.out, function () {
         $elem.removeClass('current');
         base.triggerEvent('outAnimationEnd');
+        $element.removeAttr('data-active');
         if (options.out.callback) options.out.callback();
         if (cb) cb(base);
       });

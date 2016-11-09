@@ -19,26 +19,26 @@
           <a href="https://github.com/jschr/textillate" class="btn fade in">Download on Github</a>
         </div>
         <div>
-          <a 
-            class="twitter-share-button" 
+          <a
+            class="twitter-share-button"
             href="https://twitter.com/share"
             data-text="Textillate.js - A simple plugin for CSS3 text animations"
             data-url="http://textillate.js.org"
             data-via="_jschr">
             Tweet
           </a>&nbsp;&nbsp;
-          <iframe 
-            src="https://ghbtns.com/github-btn.html?user=jschr&repo=textillate&type=star&count=true&v=2" 
-            frameborder="0" 
-            scrolling="0" 
-            width="100px" 
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=jschr&repo=textillate&type=star&count=true&v=2"
+            frameborder="0"
+            scrolling="0"
+            width="100px"
             height="20px">
           </iframe>
-          <iframe 
-            src="https://ghbtns.com/github-btn.html?user=jschr&repo=textillate&type=fork&count=true" 
-            frameborder="0" 
-            scrolling="0" 
-            width="90px" 
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=jschr&repo=textillate&type=fork&count=true"
+            frameborder="0"
+            scrolling="0"
+            width="90px"
             height="20px">
           </iframe>
         </div>
@@ -76,8 +76,8 @@
               <div class="col-1-1 viewport">
                   <div class="tlt">
                     <ul class="texts" style="display: none">
-                      <li>Grumpy wizards make toxic brew for the evil Queen and Jack.</li>
-                      <li>The quick brown fox jumps over the lazy dog.</li>
+                      <li data-id="wizard">Grumpy wizards make toxic brew for the evil Queen and Jack.</li>
+                      <li data-id="fox">The quick brown fox jumps over the lazy dog.</li>
                     </ul>
                   </div>
               </div>
@@ -147,12 +147,12 @@
       , $viewport = $('.playground .viewport');
 
     var getFormData = function () {
-      var data = { 
-        loop: true, 
-        in: { callback: log('in callback called.') }, 
+      var data = {
+        loop: true,
+        in: { callback: log('in callback called.') },
         out: { callback: log('out callback called.') }
       };
-      
+
       $form.find('[data-key="effect"]').each(function () {
         var $this = $(this)
           , key = $this.data('key')
@@ -183,10 +183,10 @@
         type = '[data-type="out"]';
       } else if (/In/.test(value)) {
         type = '[data-type="in"]';
-      } 
+      }
 
       if (type) {
-        $form.find('[data-key="effect"]' + type).append(option);        
+        $form.find('[data-key="effect"]' + type).append(option);
       }
     });
 
@@ -196,7 +196,7 @@
     $('.jumbotron h1')
       .fitText(0.5)
       .textillate({ in: { effect: 'flipInY' }});
-    
+
     $('.jumbotron p')
       .fitText(3.2, { maxFontSize: 18 })
       .textillate({ initialDelay: 1000, in: { delay: 3, shuffle: true } });
@@ -216,7 +216,7 @@
       .on('outAnimationBegin.tlt', log('outAnimationBegin.tlt triggered.'))
       .on('outAnimationEnd.tlt', log('outAnimationEnd.tlt triggered.'))
       .on('end.tlt', log('end.tlt'));
-    
+
     $form.on('change', function () {
       var obj = getFormData();
       $tlt.textillate(obj);
