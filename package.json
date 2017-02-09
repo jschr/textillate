@@ -1,0 +1,30 @@
+{
+  "name": "textillate",
+  "version": "0.4.1",
+  "homepage": "https://github.com/jschr/textillate",
+  "authors": [
+    "Jordan Schroter <jordan.schroter@gmail.com>"
+  ],
+  "description": "A simple plugin for CSS3 text animations",
+  "main": "jquery.textillate.js",
+  "keywords": [
+    "textillate",
+    "css3",
+    "animation",
+    "text",
+    "lettering"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.6.2",
+    "letteringjs": ">= 0.6.1",
+    "animate.css": ">= 3.0.0"
+  }
+}
