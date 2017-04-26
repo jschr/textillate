@@ -1,10 +1,10 @@
-#Textillate.js v0.4.1  [![JS.ORG](https://img.shields.io/badge/js.org-textillate-ffb400.svg?style=flat-square)](http://js.org)
+# Textillate.js v0.4.1  [![JS.ORG](https://img.shields.io/badge/js.org-textillate-ffb400.svg?style=flat-square)](http://js.org)
 
 See a live demo [here](http://textillate.js.org/).
 
 Textillate.js combines some awesome libraries to provide an easy-to-use plugin for applying CSS3 animations to any text.
 
-##Usage
+## Usage
 
 Let's start with the basic markup:
 
@@ -49,7 +49,7 @@ $('.tlt').textillate();
 
 Notice that you can control the animation parameters on each text (`<li>`) using the data api.
 
-##Dependencies
+## Dependencies
 To start using textillate.js, you will need the following:
 
 * [jQuery](http://jquery.com/download/)
@@ -57,7 +57,7 @@ To start using textillate.js, you will need the following:
 * [animate.css](https://github.com/daneden/animate.css)
 
 
-##Options
+## Options
 
 ```js
 $('.tlt').textillate({
@@ -130,7 +130,7 @@ $('.tlt').textillate({
 });
 ```
 
-##Events
+## Events
 
 Textillate triggers the following events:
 
@@ -147,12 +147,12 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
 });
 ```
 
-##Methods
+## Methods
 
 * `$element.textillate('start')` - Manually start/restart textillate
 * `$element.textillate('stop')` - Manually pause/stop textillate
 * `$element.textillate('in')` - Trigger the current text's in animation
 * `$element.textillate('out')` - Trigger the current text's out animation
 
-##Code Samples
+## Code Samples
 * [textillate.js + bounce.js](http://codepen.io/jschr/pen/GaJCi)
