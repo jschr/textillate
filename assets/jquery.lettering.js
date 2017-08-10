@@ -12,7 +12,7 @@
 */
 (function($){
 	function injector(t, splitter, klass, after) {
-		var a = t.text().split(splitter), inject = '';
+		var a = spliddit(t.text(), splitter), inject = '';
 		if (a.length) {
 			$(a).each(function(i, item) {
 				inject += '<span class="'+klass+(i+1)+'">'+item+'</span>'+after;
