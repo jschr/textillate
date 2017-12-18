@@ -1,10 +1,10 @@
-#Textillate.js v0.4.0  [![JS.ORG](https://img.shields.io/badge/js.org-textillate-ffb400.svg?style=flat-square)](http://js.org)
+# Textillate.js v0.4.1  [![JS.ORG](https://img.shields.io/badge/js.org-textillate-ffb400.svg?style=flat-square)](http://js.org)
 
 See a live demo [here](http://textillate.js.org/).
 
 Textillate.js combines some awesome libraries to provide an easy-to-use plugin for applying CSS3 animations to any text.
 
-##Usage
+## Usage
 
 Let's start with the basic markup:
 
@@ -37,7 +37,7 @@ You can also tell textillate.js to animate a list with the following markup:
 ```html
 <h1 class="tlt">
 	<ul class="texts">
-		<li data-out-effect="fadeOut" data-out-shuffle="true">Some Title</li>	
+		<li data-out-effect="fadeOut" data-out-shuffle="true">Some Title</li>
 		<li data-in-effect="fadeIn">Another Title</li>
 	</ul>
 </h1>
@@ -49,7 +49,7 @@ $('.tlt').textillate();
 
 Notice that you can control the animation parameters on each text (`<li>`) using the data api.
 
-##Dependencies
+## Dependencies
 To start using textillate.js, you will need the following:
 
 * [jQuery](http://jquery.com/download/)
@@ -57,60 +57,60 @@ To start using textillate.js, you will need the following:
 * [animate.css](https://github.com/daneden/animate.css)
 
 
-##Options
+## Options
 
 ```js
 $('.tlt').textillate({
   // the default selector to use when detecting multiple texts to animate
   selector: '.texts',
-  
+
   // enable looping
   loop: false,
-  
+
   // sets the minimum display time for each text before it is replaced
   minDisplayTime: 2000,
-  
+
   // sets the initial delay before starting the animation
-  // (note that depending on the in effect you may need to manually apply 
+  // (note that depending on the in effect you may need to manually apply
   // visibility: hidden to the element before running this plugin)
   initialDelay: 0,
-    
+
   // set whether or not to automatically start animating
   autoStart: true,
-  
-  // custom set of 'in' effects. This effects whether or not the 
-  // character is shown/hidden before or after an animation  
+
+  // custom set of 'in' effects. This effects whether or not the
+  // character is shown/hidden before or after an animation
   inEffects: [],
-  
+
   // custom set of 'out' effects
   outEffects: [ 'hinge' ],
-  
+
   // in animation settings
   in: {
   	// set the effect name
     effect: 'fadeInLeftBig',
-    
+
     // set the delay factor applied to each consecutive character
     delayScale: 1.5,
-    
+
     // set the delay between each character
     delay: 50,
-    
+
     // set to true to animate all the characters at the same time
     sync: false,
-    
-    // randomize the character sequence 
+
+    // randomize the character sequence
     // (note that shuffle doesn't make sense with sync = true)
     shuffle: false,
 
-    // reverse the character sequence 
+    // reverse the character sequence
     // (note that reverse doesn't make sense with sync = true)
     reverse: false,
 
     // callback that executes once the animation has finished
     callback: function () {}
   },
-  
+
   // out animation settings.
   out: {
     effect: 'hinge',
@@ -122,7 +122,7 @@ $('.tlt').textillate({
     callback: function () {}
   },
 
-  // callback that executes once textillate has finished 
+  // callback that executes once textillate has finished
   callback: function () {},
 
   // set the type of token to animate (available types: 'char' and 'word')
@@ -130,7 +130,7 @@ $('.tlt').textillate({
 });
 ```
 
-##Events
+## Events
 
 Textillate triggers the following events:
 
@@ -138,7 +138,7 @@ Textillate triggers the following events:
 * `inAnimationBegin.tlt` - triggered when the in animation begins
 * `inAnimationEnd.tlt` - triggered when the in animation ends
 * `outAnimationBegin.tlt` - triggered when the out animation begins
-* `outAnimationEnd.tlt` - triggered when the in animation ends
+* `outAnimationEnd.tlt` - triggered when the out animation ends
 * `end.tlt` - triggered when textillate ends
 
 ```js
@@ -147,12 +147,12 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
 });
 ```
 
-##Methods
+## Methods
 
 * `$element.textillate('start')` - Manually start/restart textillate
 * `$element.textillate('stop')` - Manually pause/stop textillate
 * `$element.textillate('in')` - Trigger the current text's in animation
 * `$element.textillate('out')` - Trigger the current text's out animation
 
-##Code Samples
+## Code Samples
 * [textillate.js + bounce.js](http://codepen.io/jschr/pen/GaJCi)

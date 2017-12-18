@@ -56,7 +56,7 @@
       .css('visibility', 'visible')
       .show();
 
-    $t.one('animationend webkitAnimationEnd oAnimationEnd', function () {
+    $t.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
         $t.removeClass('animated ' + effect);
         cb && cb();
     });
@@ -148,6 +148,7 @@
       $elem.addClass('current');
 
       base.triggerEvent('inAnimationBegin');
+      $element.attr('data-active', $elem.data('id'));
 
       base.$current
         .html($elem.html())
@@ -196,6 +197,7 @@
       animateTokens($tokens, options.out, function () {
         $elem.removeClass('current');
         base.triggerEvent('outAnimationEnd');
+        $element.removeAttr('data-active');
         if (options.out.callback) options.out.callback();
         if (cb) cb(base);
       });
@@ -205,26 +207,26 @@
       setTimeout(function () {
         base.triggerEvent('start');
 
-      (function run (index) {
-        base.in(index, function () {
-          var length = base.$texts.children().length;
+        (function run (index) {
+          base.in(index, function () {
+            var length = base.$texts.children().length;
 
-          index += 1;
+            index += 1;
 
-          if (!base.options.loop && index >= length) {
-            if (base.options.callback) base.options.callback();
-            base.triggerEvent('end');
-          } else {
-            index = index % length;
+            if (!base.options.loop && index >= length) {
+              if (base.options.callback) base.options.callback();
+              base.triggerEvent('end');
+            } else {
+              index = index % length;
 
-            base.timeoutRun = setTimeout(function () {
-              base.out(function () {
-                run(index)
-              });
-            }, base.options.minDisplayTime);
-          }
-        });
-      }(index || 0));
+              base.timeoutRun = setTimeout(function () {
+                base.out(function () {
+                  run(index)
+                });
+              }, base.options.minDisplayTime);
+            }
+          });
+        }(index || 0));
       }, base.options.initialDelay);
     };
 
