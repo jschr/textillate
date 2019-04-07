@@ -1,4 +1,4 @@
-# Textillate.js v0.4.1  [![JS.ORG](https://img.shields.io/badge/js.org-textillate-ffb400.svg?style=flat-square)](http://js.org)
+# Textillate.js v0.4.1  [![Backers on Open Collective](https://opencollective.com/textillate/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/textillate/sponsors/badge.svg)](#sponsors) [![JS.ORG](https://img.shields.io/badge/js.org-textillate-ffb400.svg?style=flat-square)](http://js.org)
 
 See a live demo [here](http://textillate.js.org/).
 
@@ -156,3 +156,33 @@ $('.tlt').on('inAnimationBegin.tlt', function () {
 
 ## Code Samples
 * [textillate.js + bounce.js](http://codepen.io/jschr/pen/GaJCi)
+
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/jschr/textillate/graphs/contributors"><img src="https://opencollective.com/textillate/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/textillate#backer)]
+
+<a href="https://opencollective.com/textillate#backers" target="_blank"><img src="https://opencollective.com/textillate/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/textillate#sponsor)]
+
+<a href="https://opencollective.com/textillate/sponsor/0/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/1/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/2/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/3/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/4/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/5/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/6/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/7/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/8/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/textillate/sponsor/9/website" target="_blank"><img src="https://opencollective.com/textillate/sponsor/9/avatar.svg"></a>
+
+
