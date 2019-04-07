@@ -23,8 +23,17 @@
     "tests"
   ],
   "dependencies": {
+    "animate.css": ">= 3.0.0",
     "jquery": ">= 1.6.2",
     "letteringjs": ">= 0.6.1",
-    "animate.css": ">= 3.0.0"
+    "opencollective-postinstall": "^2.0.2",
+    "opencollective": "^1.0.3"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/textillate"
+  },
+  "scripts": {
+    "postinstall": "opencollective-postinstall"
   }
 }
