@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- 依赖css -->
+    <link href="../assets/animate.compat.css" rel="stylesheet" />
+    <!-- 依赖js -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="../assets/jquery.lettering.js"></script>
+    <script src="../jquery.textillate.js"></script>
+  </head>
+
+  <body>
+    <!-- 默认动画 -->
+    <h1 class="tlt show">My Title</h1>
+    <script>
+      $(function () {
+        $('.tlt').textillate();
+      });
+    </script>
+    <!-- 自定义效果 -->
+    <!-- 1.通过自定义标签传递选项 -->
+    <h1 class="tlt2 show" data-in-effect="fadeInUp">fadeInUp</h1>
+    <script>
+      $(function () {
+        $('.tlt2').textillate();
+      });
+    </script>
+    <!-- 2.通过函数配置项传递选项 -->
+    <h1 class="tlt3 show">rotateIn</h1>
+    <script>
+      $(function () {
+        $('.tlt3').textillate({ in: { effect: 'rotateIn' } });
+      });
+    </script>
+
+    <!-- 详细配置 -->
+    <h1 class="tlt4 show">Options</h1>
+    <script>
+      $('.tlt4').textillate({
+        //当检测到多个文本要动画时使用的默认选择器
+        // selector: '.texts',
+        //启用循环
+        loop: false,
+        //设置每个文本被替换之前的最小显示时间
+        minDisplayTime: 2000,
+        //设置动画开始前的初始延迟
+        //(注意，这取决于你可能需要手动应用的效果
+        // visibility:在运行此插件之前隐藏元素)
+        initialDelay: 0,
+        //设置是否自动开始动画
+        autoStart: true,
+        //自定义一组'in'效果。这影响了是否
+        //字符在动画之前或之后显示/隐藏
+        inEffects: [],
+        //自定义的'out'效果集
+        // outEffects: ['hinge'],
+        //在动画设置
+        in: {
+          //设置效果名
+          effect: 'animate__fadeInRightBig',
+          //设置应用于每个连续字符的延迟因子
+          delayScale: 1.5,
+          //设置每个字符之间的延迟
+          delay: 50,
+          //设置为true以同时动画所有的角色
+          sync: false,
+          //随机字符序列
+          //(注意shuffle没有意义，sync = true)
+          shuffle: false,
+          //反转字符序列
+          //(注意，当sync = true时，reverse是没有意义的)
+          reverse: false,
+          //在动画完成后执行的回调函数
+          callback: function () {},
+        },
+        //输出动画设置。
+        out: {
+          effect: 'animate__rotateOutDownLeft',
+          delayScale: 1.5,
+          delay: 50,
+          sync: false,
+          shuffle: false,
+          reverse: false,
+          callback: function () {},
+        },
+        //当textillate完成后执行回调函数
+        callback: function () {},
+        //设置token的类型为animate(可用的类型:'char'和'word')
+        type: 'char',
+      });
+    </script>
+
+    <h1 class="test show" data-in-effect="bounce">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="flash">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="rubberBand">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="shakeY">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="headShake">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="swing">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="wobble">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="jello">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="heartBeat">测试文本test text</h1>
+    <h1 class="test show" data-in-effect="lightSpeedInLeft">
+      测试文本test text
+    </h1>
+    <script>
+      $(function () {
+        $('.test').textillate();
+      });
+    </script>
+
+    <!-- 降临重绘 -->
+    <script>
+      $('.show').hover(
+        function () {
+          $(this).textillate('start');
+        },
+        function () {
+          $(this).textillate('out');
+        }
+      );
+    </script>
+  </body>
+</html>

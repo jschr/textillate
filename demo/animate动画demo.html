@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>animate.css动画演示_dowebok</title>
+    <link rel="stylesheet" href="../assets/animate.compat.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      ul {
+        list-style-type: none;
+      }
+      body {
+        font: 14px 'Microsoft Yahei';
+        overflow-x: hidden;
+      }
+      h1 {
+        width: 900px;
+        margin: 40px auto 100px;
+        font: 32px 'Microsoft Yahei';
+        text-align: center;
+      }
+      h2 {
+        font: 96px 'Microsoft Yahei';
+        font-weight: 500;
+        text-align: center;
+        color: #f35626;
+      }
+      .wrap p {
+        margin-bottom: 100px;
+        font: 30px 'Microsoft Yahei';
+        text-align: center;
+        color: #999;
+      }
+      .list {
+        width: 1000px;
+        margin: 0 auto;
+      }
+      dl {
+        width: 1000px;
+        margin: 10px auto;
+        overflow: hidden;
+      }
+      dt {
+        float: left;
+        width: 1000px;
+        padding: 5px 0;
+        border-bottom: 1px solid #ddd;
+        font-weight: 700;
+      }
+      dd {
+        float: left;
+        margin: 10px 10px 0 0;
+        padding: 5px 10px;
+        background-color: #eee;
+        cursor: pointer;
+      }
+
+      .dowebok-explain {
+        display: none;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        text-align: center;
+        color: #f50;
+      }
+
+      .tab {
+        width: 900px;
+        margin: 0 auto;
+        border: 1px solid #ddd;
+      }
+      .tabNav {
+        padding-bottom: 10px;
+        overflow: hidden;
+        zoom: 1;
+        background-color: #f5f5f5;
+      }
+      .tabNav li {
+        float: left;
+        margin: 10px 0 0 10px;
+        display: inline;
+      }
+      .tabNav a {
+        float: left;
+        padding: 5px 10px;
+        color: #444;
+        text-decoration: none;
+      }
+      .tabNav .active a {
+        color: #fff;
+        background-color: #f35626;
+      }
+
+      .tabPane {
+        display: none;
+        overflow: hidden;
+        zoom: 1;
+      }
+      .tabCnt .active {
+        display: block;
+      }
+      .tabCnt {
+        padding: 10px 20px 20px;
+      }
+      .tabPane li {
+        float: left;
+        margin: 10px 10px 0 0;
+        padding: 5px 10px;
+        background-color: #eee;
+        cursor: pointer;
+      }
+      .tabPane .active {
+        color: #f35626;
+      }
+    </style>
+    <script src="https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      $(function () {
+        var $animate = $('#animate');
+        var $btn = $('.tabCnt').find('li');
+        $btn.click(function () {
+          $(this).addClass('active').siblings().removeClass('active');
+          $animate
+            .removeClass()
+            .addClass($(this).text() + ' animated infinite');
+          setTimeout(removeClass, 1000);
+        });
+
+        function removeClass() {
+          $animate.removeClass();
+        }
+
+        var $tabNavItem = $('.tabNav').find('a');
+        var $tabPane = $('.tabPane');
+        $tabNavItem.each(function (i) {
+          $(this).click(function () {
+            $(this)
+              .parent()
+              .addClass('active')
+              .siblings()
+              .removeClass('active');
+            $tabPane.eq(i).addClass('active').siblings().removeClass('active');
+            return false;
+          });
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>Animate.css动画演示</h1>
+    <div class="wrap">
+      <h2 id="animate">Animate.css</h2>
+      <p>——CSS3动画库</p>
+    </div>
+
+    <p class="dowebok-explain">
+      您的浏览器不支持 CSS3 animate 属性，所以您看不到任何效果，请使用
+      Firefox、Chrome 或 IE10
+    </p>
+    <div class="tab">
+      <ul class="tabNav">
+        <li class="active">
+          <a href="https://www.dowebok.com/">Attention Seekers</a>
+        </li>
+        <li><a href="javascript:">Bouncing Entrances</a></li>
+        <li><a href="javascript:">Bouncing Exits</a></li>
+        <li><a href="javascript:">Fading Entrances</a></li>
+        <li><a href="javascript:">Fading Exits</a></li>
+        <li><a href="javascript:">Flippers</a></li>
+        <li><a href="javascript:">Lightspeed</a></li>
+        <li><a href="javascript:">Rotating Entrances</a></li>
+        <li><a href="javascript:">Rotating Exits</a></li>
+        <li><a href="javascript:">Sliders</a></li>
+        <li><a href="javascript:">Specials</a></li>
+      </ul>
+
+      <div class="tabCnt">
+        <ul class="tabPane active">
+          <li>bounce</li>
+          <li>flash</li>
+          <li>pulse</li>
+          <li>rubberBand</li>
+          <li>shake</li>
+          <li>swing</li>
+          <li>tada</li>
+          <li>wobble</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>bounceIn</li>
+          <li>bounceInDown</li>
+          <li>bounceInLeft</li>
+          <li>bounceInRight</li>
+          <li>bounceInUp</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>bounceOut</li>
+          <li>bounceOutDown</li>
+          <li>bounceOutLeft</li>
+          <li>bounceOutRight</li>
+          <li>bounceOutUp</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>fadeIn</li>
+          <li>fadeInDown</li>
+          <li>fadeInDownBig</li>
+          <li>fadeInLeft</li>
+          <li>fadeInLeftBig</li>
+          <li>fadeInRight</li>
+          <li>fadeInRightBig</li>
+          <li>fadeInUp</li>
+          <li>fadeInUpBig</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>fadeOut</li>
+          <li>fadeOutDown</li>
+          <li>fadeOutDownBig</li>
+          <li>fadeOutLeft</li>
+          <li>fadeOutLeftBig</li>
+          <li>fadeOutRight</li>
+          <li>fadeOutRightBig</li>
+          <li>fadeOutUp</li>
+          <li>fadeOutUpBig</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>flip</li>
+          <li>flipInX</li>
+          <li>flipInY</li>
+          <li>flipOutX</li>
+          <li>flipOutY</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>lightSpeedIn</li>
+          <li>lightSpeedOut</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>rotateIn</li>
+          <li>rotateInDownLeft</li>
+          <li>rotateInDownRight</li>
+          <li>rotateInUpLeft</li>
+          <li>rotateInUpRight</li>
+        </ul>
+
+        <h3></h3>
+        <ul class="tabPane">
+          <li>rotateOut</li>
+          <li>rotateOutDownLeft</li>
+          <li>rotateOutDownRight</li>
+          <li>rotateOutUpLeft</li>
+          <li>rotateOutUpRight</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>slideInDown</li>
+          <li>slideInLeft</li>
+          <li>slideInRight</li>
+          <li>slideOutLeft</li>
+          <li>slideOutRight</li>
+          <li>slideOutUp</li>
+        </ul>
+
+        <ul class="tabPane">
+          <li>hinge</li>
+          <li>rollIn</li>
+          <li>rollOut</li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
